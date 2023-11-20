@@ -109,4 +109,4 @@ Your project - simple blog with social network functinality. Think of a name. Av
 
 Also note, that database, since it is considered user data and not code, should never enter Github codebase. 
 
-Replicate all the steps including user management actions to get familiar with the experience.
+Replicate all the steps including user management actions to get familiar with the process.
