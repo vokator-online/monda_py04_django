@@ -1,6 +1,13 @@
 # Django Project Setup
 
-This section will guide you through setting up a virtual environment, creating your Django project and first app, and important initial configurations. Then we will see how it works as a local development environment.
+## Objectives
+
+* Setting up a virtual environment
+* Creating your Django project
+* Creating your first Django app
+* Important initial configurations
+* We will RUN it and see how it works as a local development environment
+* Get familiar with User Management functionality in Django Administration
 
 ## Setting Up a Virtual Environment (venv)
 
@@ -33,7 +40,12 @@ except ImportError:
 
 In that way, whatever settings we will have in our `local_settings.py` file, during Django project startup, will take over any default settings left on the `settings.py` file, which we can leave even default safely as a fallback.
 
+### Executing Django Management Commands
+
+Once Django project is set up, in the project's root directory you can find `manage.py` file. It is used as one of the administrative user interface to the Django project. You can pass commands with arguments to `manage.py` file when running it. For example, we will run a python shell in Django project's environment and generate a secret key to be used in `local_settings.py` of your project.
+
 ### Generating a secure `SECRET_KEY`
+
 Make sure that in terminal you are in your Django project directory and your virtual environment is activated. Then run Django shell:
 
 ```bash
@@ -59,7 +71,7 @@ SECRET_KEY='5t7$Go0dCod3Ac@demy!o93e9dtd%qx!pq052h3xld=@*kpkv='
 
 Migrations are Django way of propagating it's apps models into database schema. Later during the development process, migrations will also be used to maintain database schema integrity relative to changes of models. It is not yet the perfect solution, since data loss is not always mitigatet. However, Django migrations so far is the best solution on the market.
 
-You should also be able to directly execute `manage.py` file, without directly invoking python.
+You should also be able to directly execute `manage.py` file, without directly invoking python, in Linux/Mac or WSL environment.
 
 ```Bash
 ./manage.py migrate
@@ -91,7 +103,7 @@ Also, you can use second terminal to keep `runserver` active while performing ma
 
 ### Accessing Admin Interface
 
-Visit http://localhost:8000/admin and log in with your superuser account. You will see only `Authentication and Authorization` app for now, where you will be able to manage Users and Groups. Try editing your user and adding more data to your profile, like your full name. You can also create more users for testing.
+Visit http://localhost:8000/admin/ and log in with your superuser account. You will see only `Authentication and Authorization` app for now, where you will be able to manage Users and Groups. Try editing your user and adding more data to your profile, like your full name. You can also create more users for testing.
 
 Note: `is_superuser` gives access to Django Administration and grants all permissions, while `is_staff` only gives access to Django Administration but grants no specific Groups or Permissions. Those you can set up yourself.
 

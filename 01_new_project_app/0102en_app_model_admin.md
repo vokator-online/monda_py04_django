@@ -1,6 +1,7 @@
 # Creating the `Tasks` app in our `Tasker` django project
 
 ## Objective
+
 In this section, we will create the `tasks` app, define the `task` model, and integrate it with the Django admin interface.
 
 ## Let's create the app

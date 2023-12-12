@@ -1,3 +1,23 @@
+# Data modeling with Django
+
+Object Relationship Manager is one of the many core Django features. We will use it to do database modeling. For starters, we do not need even basic SQL knowledge to begin modeling. However, we do need basic understanding of related tables and how relational databases do function. We will cover this here.
+
+## Objectives
+
+* Create a simple related model for the use case
+* Create and run database migrations
+* Register models in Django administration and try it out.
+
+## Use case
+
+For initial part of Django course we will use a simple related model, which we will expand later.
+
+Users will be able to create and manage Tasks and group them into Projects.
+
+Here is the schematic view of the data model. 
+
+![Project-Task-User model](img/project_task_user_model.png)
+
 ## Creating models
 
 The most important part of our project is data modeling. If done incorrectly, bad data model will ruin the project no matter how well executed is the rest of the codebase.
@@ -70,7 +90,7 @@ Time tracking fields like `created_at` will get it's value set only when the tas
 
 Note here, that we have made `name`, `created_at` and `updated_at`, and `is_done` fields indexed in our database. That will greatly increase performance when searching and sorting our tasks, and insignificantly reduce performance while creating such tasks.
 
-The final remark is regarding primary key field, by default named `id` and of type `integer` which is set to auto incremental value, that Django handles it automatically. We can refer to such field within Django as to both `id` and `pk` (meaning Primary Key).
+The final remark is regarding primary key field by default named `id` and of type `integer` which is set to auto incremental value. Since version 4.0, Django handles it automatically. We can refer to such field within Django as to both `id` and `pk` (meaning Primary Key). `_id` suffixes for foreign key fields are also handled since Django ORM inception so you don't need to add them to related field names. 
 
 ### Creating and running migrations
 
