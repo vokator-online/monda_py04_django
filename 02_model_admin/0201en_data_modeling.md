@@ -18,6 +18,8 @@ Here is the schematic view of the data model.
 
 ![Project-Task-User model](img/project_task_user_model.png)
 
+[DB Designer](https://dbdesigner.net) was used to create this schema. It is a very useful online tool to visualize the data model schema, free for small limited scope projects. 
+
 ## Creating models
 
 The most important part of our project is data modeling. If done incorrectly, bad data model will ruin the project no matter how well executed is the rest of the codebase.
@@ -121,7 +123,7 @@ Now you can run the server and play with your projects the tasks.
 
 1. Create a few projects and tasks for the superuser. Then create another user, give that user all permissions related to the models, then log into Admin with that user and try to create/update/delete some projects/tasks. Note that you can manipulate all objects regardless of their ownership. It is because Django permissions are model level, not object level. We will use object level permission logic later when creating the frontend of our app, and we will focus on making our Django Administration for our app more useful and pretty in the next section.
 
-2. Create a model `Page` for your blog/site project, related to another new model `Category`. Think about what fields do you want to have there, what data about such pages should be stored in the database. Register the admins, and add some content, get the grip of the overall process. Don't overhtink and overcomplicate things. Just remember that we did not start with the frontend yet.
+2. Create a model `Page` for your blog/site project, related to another new model `Category`. Think about what fields do you want to have there, what data about such pages should be stored in the database. Pages also should be user related. Register the admins, and add some content, get the grip of the overall process. Don't overhtink and overcomplicate things. Just remember that we did not start with the frontend yet.
 
 ---
 Don't focus too much on Administration part yet, just make sure the models work as intended. Next we are going to take on Django Administration and adapt it's many great features to help manipulate our models and look it all pretty.
