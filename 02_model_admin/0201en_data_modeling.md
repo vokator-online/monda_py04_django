@@ -74,6 +74,7 @@ class Task(models.Model):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True, db_index=True)
     updated_at = models.DateTimeField(_("updated at"), auto_now=True, db_index=True)
     is_done = models.BooleanField(_("is done"), default=False, db_index=True)
+    deadline = models.DateTimeField(_("deadline"), null=True, blank=True, db_index=True)
 
     def __str__(self):
         return self.name
@@ -88,9 +89,9 @@ As you see, we have created a one-to-many relationship between the `Project` and
 
 Special attention to `owner` field, which is a foreign key to Django's `contrib.auth` app's `User` model. We use `get_user_model` function to get user model, making our app compatible with custom user models by executing our model relationship this way. Since we done it from both models, and defined related names respectively, we will be able to reach both datasets from `user` object. About that later in the course.
 
-Time tracking fields like `created_at` will get it's value set only when the task object is created, while `updated_at` will be reset every time the object is updated.
+We also have created some time tracking fields. `created_at` will get it's value set only when the task object is created, while `updated_at` will be reset every time the object is updated. We have added optional field `deadline`, which is not required, but a nice to have quality of life feature in case we want to set deadlines for tasks.
 
-Note here, that we have made `name`, `created_at` and `updated_at`, and `is_done` fields indexed in our database. That will greatly increase performance when searching and sorting our tasks, and insignificantly reduce performance while creating such tasks.
+Note here, that we have made `name`, `created_at` and `updated_at`, `is_done` and `deadline` fields indexed in our database. That will greatly increase performance when searching and sorting our tasks, and insignificantly reduce performance while creating such tasks.
 
 The final remark is regarding primary key field by default named `id` and of type `integer` which is set to auto incremental value. Since version 4.0, Django handles it automatically. We can refer to such field within Django as to both `id` and `pk` (meaning Primary Key). `_id` suffixes for foreign key fields are also handled since Django ORM inception so you don't need to add them to related field names. 
 
@@ -104,6 +105,8 @@ Every time app's model is updated, we should create and run migrations. We can d
 ```
 
 While executing `makemigrations`, Django will check for changes across all our project apps and create migration files where any changes were detected. We can pass app name as an argument to the command. Then, `migrate` will just execute the changes. To check project's migration status, we can use `showmigrations` management command.
+
+If you check the example of this course material `tasker`, you will find that the `deadline` field for the `Task` model class is migrated in `0002_` migration. It is done on purpose to demonstrate how painless it is to add features to your model when your application scope scales up.
 
 ## Registering your models to Django Administration
 

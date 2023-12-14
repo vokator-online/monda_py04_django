@@ -49,7 +49,7 @@ Go and test it out.
 
 ---
 
-### Quick Assignment
+### Quick Assignment 1
 
 Create a list display representation for `TaskAdmin` class. You don't need the ID, but add most relevant fields like `project`, `created_at`, `is_done`. Think about the order. Also avoid huge value fields like `description`.
 
@@ -67,19 +67,19 @@ You can also leave `id` in the `list_display_links`. Try it out.
 
 ## List Filters
 
-While Django Administration is a tool designed not for end-user, but for internal administration, it does not mean administration user interface cannot be optimized for convenience. Filtering is one of such conveniences. Let's add filtering by `project`, `owner`, `is_done`, and `created_at`. All 4 filters, one line:
+While Django Administration is a tool designed not for end-user, but for internal administration, it does not mean administration user interface cannot be optimized for convenience. Filtering is one of such conveniences. Let's add filtering by `project`, `owner`, `is_done`, `deadline`, and `created_at`. All 4 filters, one line:
 
 ```Python
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['name', 'is_done', 'project', 'owner', 'created_at']
-    list_filter = ['is_done', 'owner', 'project', 'created_at']
+    list_display = ['name', 'is_done', 'deadline', 'project', 'owner', 'created_at']
+    list_filter = ['is_done', 'project', 'owner', 'deadline', 'created_at']
 ```
 
 You might not see filters exposed in case of too few data. You should add more Users and Projects to expose their filters. Django is optimized to hide unnecessary bits in case they are not relevant. You should also keep this philosophy in your software architecture.
 
 ---
 
-### Quick Assignment
+### Quick Assignment 2
 
 Create the `owner` filter in `PorjectAdmin` class.
 
@@ -91,8 +91,8 @@ Filters are convenient as long as they are small. Once we have many projects or 
 
 ```Python
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['name', 'is_done', 'project', 'owner', 'created_at']
-    list_filter = ['is_done', 'created_at']
+    list_display = ['name', 'is_done', 'deadline', 'project', 'owner', 'created_at']
+    list_filter = ['is_done', 'deadline', 'created_at']
     search_fields = ['name', 'description', 'project__name', 'owner__last_name', 'owner__username']
 ```
 
@@ -100,7 +100,7 @@ We have removed `project` and `owner` from list filters, and in addition to task
 
 ---
 
-### Quick Assignment
+### Quick Assignment 3
 
 Create search for the `name` in `PorjectAdmin` class.
 
@@ -137,7 +137,7 @@ class TaskAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('General'), {
             "fields": (
-                ('id', 'is_done', 'name'), 'description',
+                ('name', 'deadline', 'is_done'), 'description',
             ),
         }),
         (_('Ownership'), {
@@ -147,7 +147,7 @@ class TaskAdmin(admin.ModelAdmin):
         }),
         (_('Temporal Tracking'), {
             "fields": (
-                ('created_at', 'updated_at'),
+                ('created_at', 'updated_at', 'id'),
             ),
         }),
     )
@@ -157,7 +157,7 @@ It looks complicated, but it isn't if following the identation properly. VS Code
 
 ---
 
-### Quick Assignment
+### Quick Assignment 4
 
 Create a simple fieldset for `ProjectAdmin`, single section, leave section name as `None`, and add all fields, including `id`, into the same line.
 
@@ -209,10 +209,20 @@ class ProjectAdmin(admin.ModelAdmin):
 
 That line is a bit to unpack. So we take `obj`'s `tasks` and order them by `created_at`. Then, we take `vaules_list` of `name` field values and make if flat. Then slice it to max 3 entries, to avoid extra-long columns (imagine that there can be 1000s of tasks per project). And to neatly represent such a values list, we use native Python string `join` method on the semicolon-space separator.
 
-### Quick Assignemnt
+---
+
+### Quick Assignemnt 5
 
 Now for a quick practice, try to make a custom field for a short list of most recent undone tasks.
 
+---
+
+## Assignments
+
+1. Create a few more projects, then a lot more tasks. Play with the scenarios. If you run out of ideas, you are welcome to just go and talk to everyone else in the group. You can make your study plan into a tasks-project, as well as starting a company project, or some software project you have ideas for a long time. At least one project should get like 20ish tasks, and there should be over 10 projects, even if some empty. We will need this data to play with during next course.
+
+2. Create more sophisticated administration for your categorized pages. Think about what functionality would allow administrator to manage the ever-growing blogging platform? How would you filter? Is there any field worth making inline editable? What statistics of pages could Category admin use?
+
 #### TODO:
-* run through spelling and gramma, also through ChatGPT for suggestions
+* run through spelling and grammar, also through ChatGPT for suggestions
 * add assignments for the blog project

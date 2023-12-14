@@ -27,15 +27,15 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['name', 'is_done', 'project', 'owner', 'created_at']
-    list_filter = ['is_done', 'created_at']
+    list_display = ['name', 'is_done', 'deadline', 'project', 'owner', 'created_at']
+    list_filter = ['is_done', 'deadline', 'created_at']
     search_fields = ['name', 'description', 'project__name', 'owner__last_name', 'owner__username']
     list_editable = ['is_done']
     readonly_fields = ['created_at', 'updated_at', 'id']
     fieldsets = (
         (_('General'), {
             "fields": (
-                ('id', 'is_done', 'name'), 'description',
+                ('name', 'deadline', 'is_done'), 'description',
             ),
         }),
         (_('Ownership'), {
@@ -45,7 +45,7 @@ class TaskAdmin(admin.ModelAdmin):
         }),
         (_('Temporal Tracking'), {
             "fields": (
-                ('created_at', 'updated_at'),
+                ('created_at', 'updated_at', 'id'),
             ),
         }),
     )
