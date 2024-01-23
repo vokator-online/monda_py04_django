@@ -6,6 +6,18 @@
     <title>{% block title %}TASKer{% endblock title %}</title>
 </head>
 <body>
+    <header>
+        <span class="logo">TASKer</span>
+        <ul>
+            <li><a href="{% url 'index' %}">Dashboard</a></li>
+            <li><a href="{% url 'task_list' %}">Tasks</a></li>
+        </ul>
+    </header>
+    <section class="messages">
+        {% for message in messages %}
+            <p class="message message-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </section>
     <main>{% block content %}{% endblock content %}</main>
 </body>
 </html>

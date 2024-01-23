@@ -15,9 +15,12 @@ Views in Django can be function based or class based. Both have their advantages
 Firstly, in our `tasks/views.py` file, we import our models:
 
 ```Python
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from . import models
 ```
+
+At the same time we are also importing `HttpRequest` and `HttpResponse` classes from `django.http`, as we will use them for annotations.
 
 We could also import specific models, it is up to you. But this way is cleaner in most cases, especially if app grows and we add more models. This way, for example, we can reuse access `django.contrib.auth` function `get_user_model` from there without extra importing.
 
@@ -28,7 +31,7 @@ We can use Django shortcut `render` for the result of any function to make it in
 * any data from models, or anything from Python basically, must be constructed into a `context` dictionary.
 
 ```Python
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     context = {
         'projects_count': models.Project.objects.count(),
         'tasks_count': models.Task.objects.count(),
