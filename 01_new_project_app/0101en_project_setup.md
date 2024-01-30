@@ -27,6 +27,8 @@ Naming the project properly is the most important part of the project. Project n
 
 To create a project named `tasker`, run `django-admin startproject tasker`. You will see project's `manage.py` file created, along with project's directory with `settings.py`, `urls.py` and deployment related `asgi.py`/`wsgi.py` files. `__init__.py` is intentionally empty and will be created in every directory under `manage.py`.
 
+Project `tasker` will grow with the material and most of the code will mutate. To keep the example code relevant temporally, we have divided the example code by suffixing it with the material number from which it is valid. For example, `tasker_01` is valid example until `tasker_04`, which takes over from the `04_` material. If you try to replicate the process, it is best that you just stick to `tasker` as project name.
+
 ### Github Django Project best practices - correct configuration by using `local_settings.py`
 
 Sensitive configuration data, such as database passwords, email login credentials, API keys, and especially `SECRET_KEY`, should never enter Github repository. For that, we will setup .gitignored files `local_settings.py`, where we will set all the sensitive parameters. At the end of `settings.py` file we will add the following lines:

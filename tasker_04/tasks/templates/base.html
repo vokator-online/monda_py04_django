@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TASKer{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+    <header>
+        <span class="logo">TASKer</span>
+        <ul class="nav">
+            <li><a href="{% url 'index' %}">Dashboard</a></li>
+            <li><a href="{% url 'task_list' %}">Tasks</a></li>
+        </ul>
+    </header>
+    <section class="messages">
+        {% for message in messages %}
+            <p class="message message-{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </section>
+    <main>{% block content %}{% endblock content %}</main>
+    <footer>
+        {% block footer %}{% endblock footer %}
+        <p>&copy; 2023-2024 <a href="http://gka.lt" target="_blank">Gero Kodo Akademija</a></p>
+    </footer>
+</body>
+</html>

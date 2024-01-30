@@ -1,0 +1,88 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-29 12:30+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
+#: tasks/admin.py:14
+msgid "total tasks"
+msgstr "viso užduočių"
+
+#: tasks/admin.py:18
+msgid "undone tasks"
+msgstr "neatliktos užduotys"
+
+#: tasks/admin.py:22 tasks/admin.py:26
+msgid "recent tasks"
+msgstr "paskutinės užduotys"
+
+#: tasks/admin.py:36
+msgid "General"
+msgstr "Bendras"
+
+#: tasks/admin.py:41
+msgid "Ownership"
+msgstr "Nuosavybė"
+
+#: tasks/admin.py:46
+msgid "Temporal Tracking"
+msgstr "Laiko Sekimas"
+
+#: tasks/apps.py:10 tasks/models.py:49
+msgid "tasks"
+msgstr "užduotys"
+
+#: tasks/models.py:7 tasks/models.py:25
+msgid "name"
+msgstr "pavadinimas"
+
+#: tasks/models.py:11 tasks/models.py:36
+msgid "owner"
+msgstr "savininkas"
+
+#: tasks/models.py:19 tasks/models.py:30
+msgid "project"
+msgstr "projektas"
+
+#: tasks/models.py:20
+msgid "projects"
+msgstr "projektai"
+
+#: tasks/models.py:26
+msgid "description"
+msgstr "aprašas"
+
+#: tasks/models.py:39
+msgid "created at"
+msgstr "sukurta"
+
+#: tasks/models.py:40
+msgid "updated at"
+msgstr "atnaujinta"
+
+#: tasks/models.py:41
+msgid "is done"
+msgstr "atlikta"
+
+#: tasks/models.py:42
+msgid "deadline"
+msgstr "terminas"
+
+#: tasks/models.py:48
+msgid "task"
+msgstr "užduotis"
