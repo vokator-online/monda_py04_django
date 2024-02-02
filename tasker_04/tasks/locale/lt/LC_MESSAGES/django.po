@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-29 12:30+0000\n"
+"POT-Creation-Date: 2024-02-02 13:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
 "1 : n % 1 != 0 ? 2: 3);\n"
+
 #: tasks/admin.py:14
 msgid "total tasks"
 msgstr "viso užduočių"
@@ -86,3 +87,45 @@ msgstr "terminas"
 #: tasks/models.py:48
 msgid "task"
 msgstr "užduotis"
+
+#: tasks/templates/base.html:14
+msgid "Dashboard"
+msgstr "Suvestinė"
+
+#: tasks/templates/base.html:15 tasks/templates/tasks/index.html:7
+#: tasks/templates/tasks/task_list.html:5
+#| msgid "tasks"
+msgid "Tasks"
+msgstr "Užduotys"
+
+#: tasks/templates/tasks/index.html:5
+msgid "Users"
+msgstr "Vartotojai"
+
+#: tasks/templates/tasks/index.html:6
+#| msgid "projects"
+msgid "Projects"
+msgstr "Projektai"
+
+#: tasks/templates/tasks/task_detail.html:9
+#| msgid "deadline"
+msgid "Deadline"
+msgstr "Terminas"
+
+#: tasks/templates/tasks/task_detail.html:11
+#| msgid "created at"
+msgid "Created"
+msgstr "Sukurta"
+
+#: tasks/templates/tasks/task_detail.html:13
+#| msgid "updated at"
+msgid "updated"
+msgstr "atnaujinta"
+
+#: tasks/templates/tasks/task_list.html:3
+msgid "list"
+msgstr "sąrašas"
+
+#: tasks/templates/tasks/task_list.html:14
+msgid "No Tasks Found"
+msgstr "Užduočių nerasta"

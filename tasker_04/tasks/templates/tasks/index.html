@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
-    <h1>TASKer</h1>
-    <p>Users: {{ users_count }}</p>
-    <p>Projects: {{ projects_count }}</p>
-    <p>Tasks: {{ tasks_count }}</p>
+    <h1>{% trans "Dashboard" %}</h1>
+    <p>{% trans "Users" %}: {{ users_count }}</p>
+    <p>{% trans "Projects" %}: {{ projects_count }}</p>
+    <p>{% trans "Tasks" %}: {{ tasks_count }}</p>
 {% endblock content %}

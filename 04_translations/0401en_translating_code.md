@@ -31,3 +31,70 @@ def task_done(request: HttpRequest, pk:int) -> HttpResponse:
 
 In every app which has translatable strings, we need to create `locale` folder. Then we can use `manage.py` command `makemessages` with language/locale argument, for example `-l=lt` for lithuanian language. We will find [django.po](../tasker_04/tasks/locale/lt/LC_MESSAGES/django.po) file in `locale/lt/LC_MESSAGES` folder. We can open them with VS Code and translate their contents.
 
+Then, once translations are ready, we need to compile them by running `manage.py` command `compilemessages`.
+
+```bash
+(venv) bash:~/monda_py04_django/tasker_04$ ./manage.py compilemessages
+processing file django.po in /home/kestas/monda_py04_django/tasker_04/tasks/locale/lt/LC_MESSAGES
+```
+
+## Project's Language Settings
+
+We can change default project's language in project's `settings.py` file, by setting `LANGUAGE_CODE` value.
+
+```Python
+LANGUAGE_CODE = 'lt'
+```
+
+Then after restarting the server we can see the translated results. There is nothing translated on the frontend (yet), but we can see the difference in `admin`.
+
+## Translations in HTML templates
+
+We can mark text for translation in HTML templates by passing it through `{% trans %}` tag as string argument. Let's translate the `base.html` template.
+
+First, we make sure the internationalization HTML tags library called `i18n` is loaded.
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+{% load static i18n %}
+...
+```
+
+When it comes to content, only menu items had translatables.
+
+```HTML
+<ul class="nav">
+    <li><a href="{% url 'index' %}">{% trans "Dashboard" %}</a></li>
+    <li><a href="{% url 'task_list' %}">{% trans "Tasks" %}</a></li>
+</ul>
+```
+
+There are a few translatables in `index.html`:
+
+```HTML
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <h1>TASKer</h1>
+    <p>{% trans "Users" %}: {{ users_count }}</p>
+    <p>{% trans "Projects" %}: {{ projects_count }}</p>
+    <p>{% trans "Tasks" %}: {{ tasks_count }}</p>
+{% endblock content %}
+```
+
+Note: Make sure not to forget loading the `i18n` library.
+
+Then, we do the same for other templates (`task_list.html` and `task_list.html`).
+
+Once translatables are defined for the HTML templates:
+
+* regenerate translation file with `makemessages` management command
+* go through text translations in the translations file, located in app's `locale` folder
+* run `compilemessages` management command
+
+Congratulations, the UI is now translated! Next, we are going to create a language switcher widget for the frontend user interface, and language detection for our Django project.
+
+## Assignment
+
+Create translations for your blog project user interface, do the translations, and test. Choose the language other than English you are proficient with.
