@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>{% load static i18n %}{% get_current_language as LANGUAGE_CODE %}{% get_available_languages as LANGUAGES %}
+<html lang="{{ LANGUAGE_CODE }}">
 {% load static i18n %}
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,18 @@
             <li><a href="{% url 'index' %}">{% trans "Dashboard" %}</a></li>
             <li><a href="{% url 'task_list' %}">{% trans "Tasks" %}</a></li>
         </ul>
+        <span class="spacer"></span>
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ redirect_to }}">
+            <select class="language" name="language" onchange="this.form.submit();">
+                {% for lang in LANGUAGES %}
+                    <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>
+                        {{ lang.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
     </header>
     <section class="messages">
         {% for message in messages %}

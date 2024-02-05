@@ -121,3 +121,11 @@ section.messages {
 .message-error {
     background-color: #ffaaaa;
 }
+
+.spacer {
+    flex-grow: 1;
+}
+
+header form {
+    margin: 0.5rem;
+}
