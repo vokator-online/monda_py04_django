@@ -65,8 +65,8 @@ When it comes to content, only menu items had translatables.
 
 ```HTML
 <ul class="nav">
-    <li><a href="{% url 'index' %}">{% trans "Dashboard" %}</a></li>
-    <li><a href="{% url 'task_list' %}">{% trans "Tasks" %}</a></li>
+    <li><a href="{% url 'index' %}">{% trans "dashboard"|capfirst %}</a></li>
+    <li><a href="{% url 'task_list' %}">{% trans "tasks"|capfirst %}</a></li>
 </ul>
 ```
 
@@ -76,10 +76,10 @@ There are a few translatables in `index.html`:
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-    <h1>TASKer</h1>
-    <p>{% trans "Users" %}: {{ users_count }}</p>
-    <p>{% trans "Projects" %}: {{ projects_count }}</p>
-    <p>{% trans "Tasks" %}: {{ tasks_count }}</p>
+    <h1>{% trans "dashboard"|capfirst %}</h1>
+    <p>{% trans "users"|capfirst %}: {{ users_count }}</p>
+    <p>{% trans "projects"|capfirst %}: {{ projects_count }}</p>
+    <p>{% trans "tasks"|capfirst %}: {{ tasks_count }}</p>
 {% endblock content %}
 ```
 

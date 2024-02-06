@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-02 13:24+0000\n"
+"POT-Creation-Date: 2024-02-06 13:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,7 +44,8 @@ msgstr "Nuosavybė"
 msgid "Temporal Tracking"
 msgstr "Laiko Sekimas"
 
-#: tasks/apps.py:10 tasks/models.py:49
+#: tasks/apps.py:10 tasks/models.py:49 tasks/templates/base.html:14
+#: tasks/templates/tasks/index.html:6 tasks/templates/tasks/task_list.html:4
 msgid "tasks"
 msgstr "užduotys"
 
@@ -60,7 +61,7 @@ msgstr "savininkas"
 msgid "project"
 msgstr "projektas"
 
-#: tasks/models.py:20
+#: tasks/models.py:20 tasks/templates/tasks/index.html:5
 msgid "projects"
 msgstr "projektai"
 
@@ -80,7 +81,7 @@ msgstr "atnaujinta"
 msgid "is done"
 msgstr "atlikta"
 
-#: tasks/models.py:42
+#: tasks/models.py:42 tasks/templates/tasks/task_detail.html:8
 msgid "deadline"
 msgstr "terminas"
 
@@ -88,44 +89,42 @@ msgstr "terminas"
 msgid "task"
 msgstr "užduotis"
 
-#: tasks/templates/base.html:14
-msgid "Dashboard"
-msgstr "Suvestinė"
+#: tasks/templates/base.html:13 tasks/templates/tasks/index.html:3
+msgid "dashboard"
+msgstr "suvestinė"
 
-#: tasks/templates/base.html:15 tasks/templates/tasks/index.html:7
-#: tasks/templates/tasks/task_list.html:5
-#| msgid "tasks"
-msgid "Tasks"
-msgstr "Užduotys"
+#: tasks/templates/base.html:21
+msgid "admin"
+msgstr "adminas"
 
-#: tasks/templates/tasks/index.html:5
-msgid "Users"
-msgstr "Vartotojai"
+#: tasks/templates/base.html:23
+msgid "log out"
+msgstr "atsijungti"
 
-#: tasks/templates/tasks/index.html:6
-#| msgid "projects"
-msgid "Projects"
-msgstr "Projektai"
+#: tasks/templates/base.html:25
+msgid "log in"
+msgstr "prisijungti"
 
-#: tasks/templates/tasks/task_detail.html:9
-#| msgid "deadline"
-msgid "Deadline"
-msgstr "Terminas"
+#: tasks/templates/base.html:26
+msgid "sign up"
+msgstr "registracija"
 
-#: tasks/templates/tasks/task_detail.html:11
-#| msgid "created at"
-msgid "Created"
-msgstr "Sukurta"
+#: tasks/templates/tasks/index.html:4
+msgid "users"
+msgstr "vartotojai"
 
-#: tasks/templates/tasks/task_detail.html:13
-#| msgid "updated at"
+#: tasks/templates/tasks/task_detail.html:10
+msgid "created"
+msgstr "sukurta"
+
+#: tasks/templates/tasks/task_detail.html:12
 msgid "updated"
 msgstr "atnaujinta"
 
-#: tasks/templates/tasks/task_list.html:3
+#: tasks/templates/tasks/task_list.html:2
 msgid "list"
 msgstr "sąrašas"
 
-#: tasks/templates/tasks/task_list.html:14
-msgid "No Tasks Found"
-msgstr "Užduočių nerasta"
+#: tasks/templates/tasks/task_list.html:13
+msgid "no tasks found"
+msgstr "užduočių nerasta"
