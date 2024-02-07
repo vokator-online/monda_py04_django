@@ -26,19 +26,25 @@ header ul.nav {
     list-style-type: none;
     margin-block: 0.5rem;
     padding-inline: 0;
+    gap: 1px;
 }
 
-header ul.nav li a {
+header ul.nav li a, header ul.nav li form button {
     background-color: #aaaaaa;
     display: block;
     margin: 0;
     padding: 0.5rem;
+    border: none;
     border-bottom: 2px solid #004488;
+    cursor: pointer;
+    color: #004488;
+    font-size: 100%;
 }
 
-header ul.nav li a:hover {
+header ul.nav li a:hover, header ul.nav li form button:hover {
     background-color: #b8b8b8;
     border-bottom: 2px solid #0055cc;
+    color: #0055cc;
 }
 
 main {
@@ -126,8 +132,9 @@ section.messages {
     flex-grow: 1;
 }
 
-header form {
-    margin: 0.5rem;
+header form select {
+    margin: 1rem;
+    font-size: 100%;
 }
 
 main form label {

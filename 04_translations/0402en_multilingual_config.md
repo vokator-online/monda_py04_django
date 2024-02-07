@@ -105,8 +105,9 @@ And in `static/css/style.css` we can define `.spacer` class with parameter `flex
 .spacer {
     flex-grow: 1;
 }
-header form {
-    margin: 0.5rem;
+header form select {
+    margin: 1rem;
+    font-size: 100%;
 }
 ```
 

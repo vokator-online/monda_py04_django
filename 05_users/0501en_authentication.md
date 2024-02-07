@@ -249,4 +249,15 @@ Let's link all that nice user functionality to the user menu in the `base.html`,
 ...
 ```
 
+User authentication logic is implemented here, where authenticated users are shown their profile page link and option to log out, and staff or superuser users get also "Admin" link. Unauthenticated users get login and signup links.
+
 Now we have functioning user self-service functionality on the frontend, including signup, login, logout, password reminder and user profile page. Don't forget translations!
+
+## Assignment
+
+Copy the just created user_profile app to your blog project and integrate it:
+
+* add necessary configuration lines to `settings.py`
+* add necessary URL patterns to project's `urls.py`
+* change branding in template's strings
+* add user menu to `base.html` template
