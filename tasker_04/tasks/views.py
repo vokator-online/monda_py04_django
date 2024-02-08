@@ -1,5 +1,8 @@
+from typing import Any
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
@@ -37,6 +40,16 @@ class ProjectListView(generic.ListView):
     model = models.Project
     template_name = 'tasks/project_list.html'
 
+    def get_queryset(self) -> QuerySet[Any]:
+        queryset = super().get_queryset()
+        if self.request.GET.get('owner'):
+            queryset = queryset.filter(owner__username=self.request.GET.get('owner'))
+        return queryset
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['user_list'] = get_user_model().objects.all().order_by('username')
+        return context
 
 class ProjectDetailView(generic.DetailView):
     model = models.Project
@@ -55,3 +68,34 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+class ProjectUpdateView(
+        LoginRequiredMixin, 
+        UserPassesTestMixin, 
+        generic.UpdateView
+    ):
+    model = models.Project
+    template_name = 'tasks/project_update.html'
+    fields = ('name', )
+
+    def get_success_url(self) -> str:
+        messages.success(self.request, _('project created successfully').capitalize())
+        return reverse('project_list')
+
+    def test_func(self) -> bool | None:
+        return self.get_object().owner == self.request.user
+
+class ProjectDeleteView(
+        LoginRequiredMixin, 
+        UserPassesTestMixin, 
+        generic.DeleteView
+    ):
+    model = models.Project
+    template_name = 'tasks/project_delete.html'
+
+    def get_success_url(self) -> str:
+        messages.success(self.request, _('project deleted successfully').capitalize())
+        return reverse('project_list')
+
+    def test_func(self) -> bool | None:
+        return self.get_object().owner == self.request.user
