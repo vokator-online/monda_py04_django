@@ -33,9 +33,10 @@ We will start from the simple app containing a user related `Project` and `Task`
 `Task`, in addition, contains a `project` field, which relates to `Project` model, a text field `description`, `created_at`, `updated_at` fields for time tracking, and the `is done` boolean field to track it's completion status.
 
 ```Python
-from django.db import models
-from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.urls import reverse
+from django.utils.translation import gettext as _
 
 
 class Project(models.Model):
@@ -54,6 +55,9 @@ class Project(models.Model):
         verbose_name = _("project")
         verbose_name_plural = _("projects")
         ordering = ['name']
+
+    def get_absolute_url(self):
+        return reverse("project_detail", kwargs={"pk": self.pk})
 
 
 class Task(models.Model):
@@ -83,6 +87,9 @@ class Task(models.Model):
         verbose_name = _("task")
         verbose_name_plural = _("tasks")
         ordering = ['is_done', '-created_at']
+
+    def get_absolute_url(self):
+        return reverse("task_detail", kwargs={"pk": self.pk})
 ```
 
 As you see, we have created a one-to-many relationship between the `Project` and `Task` models, meaning that each task will belong to one project, while a project can have zero to many tasks. We will be able to access all project's tasks through `.tasks` attribute of the project's object, since we have defined a related name.
