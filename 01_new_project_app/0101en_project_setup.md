@@ -59,7 +59,7 @@ It will open an interactyve __python__ shell, so you can run python code within 
 
 ```Python
 from django.core.management import utils
-utils.et_random_secret_key()
+utils.get_random_secret_key()
 ```
 
 You can re-run the funcion repeatedly until the generated key "fits your taste". Then use `exit()` function or press CTRL+Z to exit the python shell.
