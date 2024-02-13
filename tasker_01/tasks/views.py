@@ -11,12 +11,10 @@ def index(request: HttpRequest) -> HttpResponse:
     }
     return render(request, 'tasks/index.html', context)
 
-
 def task_list(request: HttpRequest) -> HttpResponse:
     return render(request, 'tasks/task_list.html', {
         'task_list': models.Task.objects.all()
     })
-
 
 def task_detail(request: HttpRequest, pk:int) -> HttpResponse:
     return render(request, 'tasks/task_detail.html', {
