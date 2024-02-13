@@ -6,7 +6,7 @@ By just registering models to Django Administration, we get a default model admi
 
 * Customized representation in model admin's list view
 * Admin List Filters
-* Admin List Saarch
+* Admin List Search
 * Admin List Editing
 * Customized fieldsets in the change form
 * Custom funcion representations in model admin's list view
@@ -135,17 +135,18 @@ class TaskAdmin(admin.ModelAdmin):
     # ...
     readonly_fields = ['id', 'created_at', 'updated_at']
     fieldsets = (
-        (_('General'), {
+        (_("general").title(), {
             "fields": (
-                ('name', 'deadline', 'is_done'), 'description',
+                ('name', 'deadline'),
+                'description', 'is_done',
             ),
         }),
-        (_('Ownership'), {
+        (_("ownership").title(), {
             "fields": (
                 ('owner', 'project'),
             ),
         }),
-        (_('Temporal Tracking'), {
+        (_("temporal tracking").title(), {
             "fields": (
                 ('created_at', 'updated_at', 'id'),
             ),
