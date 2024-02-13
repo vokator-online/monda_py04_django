@@ -48,7 +48,7 @@ Then let's add URL patterns into `urls.py`:
 
 ```Python
 urlpatterns = [
-    ...
+    # ...
     path('projects/', views.ProjectListView.as_view(), name='project_list'),
     path('project/<int:pk>/', views.ProjectDetailView.as_view(), name='project_detail'),
 ]
@@ -103,9 +103,9 @@ URL pattern:
 
 ```Python
 urlpatterns = [
-    ...
+    # ...
     path('projects/create/', views.ProjectCreateView.as_view(), name='project_create'),
-    ...
+    # ...
 ]
 ```
 
@@ -162,7 +162,7 @@ Then, as always, URL pattern (with object's `pk` argument) goes to `urls.py`:
 
 ```Python
 urlpatterns = [
-    ...
+    # ...
     path('project/<int:pk>/edit/', views.ProjectUpdateView.as_view(), name='project_update'),
 ]
 ```
@@ -211,7 +211,7 @@ The URL pattern:
 
 ```Python
 urlpatterns = [
-    ...
+    # ...
     path('project/<int:pk>/delete/', views.ProjectDeleteView.as_view(), name='project_delete'),
 ]
 ```
