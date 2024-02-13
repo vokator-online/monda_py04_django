@@ -101,7 +101,7 @@ Let's create URL for the `task_detail` page:
 
 ```Python
 urlpatterns = [
-    ...
+    # ...
     path('task/<int:pk>/', views.task_detail, name='task_detail'),
 ]
 ```
@@ -165,7 +165,7 @@ And the URL pattern line is very similar to the `task_detail`:
 
 ```Python
 urlpatterns = [
-    ...
+    # ...
     path('task/<int:pk>/done/', views.task_done, name='task_done'),
 ]
 ```
@@ -194,7 +194,7 @@ Then add the `messages.success()` to the view before `return`:
 
 ```Python
 def task_done(...):
-    ...
+    # ...
     messages.success(request, f"Task #{task.pk} marked as {'done' if task.is_done else 'undone'}.")
     return redirect(task_list)
 ```

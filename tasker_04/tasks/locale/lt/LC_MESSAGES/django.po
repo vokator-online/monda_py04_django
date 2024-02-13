@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-06 13:49+0000\n"
+"POT-Creation-Date: 2024-02-13 08:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,72 +20,77 @@ msgstr ""
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
 "1 : n % 1 != 0 ? 2: 3);\n"
 
-#: tasks/admin.py:14
+#: tasks/admin.py:21
 msgid "total tasks"
 msgstr "viso užduočių"
 
-#: tasks/admin.py:18
+#: tasks/admin.py:25
 msgid "undone tasks"
 msgstr "neatliktos užduotys"
 
-#: tasks/admin.py:22 tasks/admin.py:26
+#: tasks/admin.py:29 tasks/admin.py:33
 msgid "recent tasks"
 msgstr "paskutinės užduotys"
 
-#: tasks/admin.py:36
-msgid "General"
-msgstr "Bendras"
+#: tasks/admin.py:43
+msgid "general"
+msgstr "bendras"
 
-#: tasks/admin.py:41
-msgid "Ownership"
-msgstr "Nuosavybė"
+#: tasks/admin.py:49
+msgid "ownership"
+msgstr "nuosavybė"
 
-#: tasks/admin.py:46
-msgid "Temporal Tracking"
-msgstr "Laiko Sekimas"
+#: tasks/admin.py:54
+msgid "temporal tracking"
+msgstr "laiko sekimas"
 
-#: tasks/apps.py:10 tasks/models.py:49 tasks/templates/base.html:14
-#: tasks/templates/tasks/index.html:6 tasks/templates/tasks/task_list.html:4
+#: tasks/apps.py:10 tasks/models.py:50 tasks/templates/base.html:15
+#: tasks/templates/tasks/index.html:6
+#: tasks/templates/tasks/project_detail.html:12
+#: tasks/templates/tasks/task_list.html:4
 msgid "tasks"
 msgstr "užduotys"
 
-#: tasks/models.py:7 tasks/models.py:25
+#: tasks/models.py:8 tasks/models.py:29
 msgid "name"
 msgstr "pavadinimas"
 
-#: tasks/models.py:11 tasks/models.py:36
+#: tasks/models.py:12 tasks/models.py:40
+#: tasks/templates/tasks/project_detail.html:11
 msgid "owner"
 msgstr "savininkas"
 
-#: tasks/models.py:19 tasks/models.py:30
+#: tasks/models.py:17 tasks/models.py:34
 msgid "project"
 msgstr "projektas"
 
-#: tasks/models.py:20 tasks/templates/tasks/index.html:5
+#: tasks/models.py:18 tasks/templates/base.html:14
+#: tasks/templates/tasks/index.html:5 tasks/templates/tasks/project_list.html:2
+#: tasks/templates/tasks/project_list.html:4
 msgid "projects"
 msgstr "projektai"
 
-#: tasks/models.py:26
+#: tasks/models.py:30
 msgid "description"
 msgstr "aprašas"
 
-#: tasks/models.py:39
+#: tasks/models.py:43
 msgid "created at"
 msgstr "sukurta"
 
-#: tasks/models.py:40
+#: tasks/models.py:44
 msgid "updated at"
 msgstr "atnaujinta"
 
-#: tasks/models.py:41
+#: tasks/models.py:45
 msgid "is done"
 msgstr "atlikta"
 
-#: tasks/models.py:42 tasks/templates/tasks/task_detail.html:8
+#: tasks/models.py:46 tasks/templates/tasks/task_detail.html:8
 msgid "deadline"
 msgstr "terminas"
 
-#: tasks/models.py:48
+#: tasks/models.py:49
 msgid "task"
 msgstr "užduotis"
 
@@ -93,25 +98,94 @@ msgstr "užduotis"
 msgid "dashboard"
 msgstr "suvestinė"
 
-#: tasks/templates/base.html:21
+#: tasks/templates/base.html:22
 msgid "admin"
 msgstr "adminas"
 
-#: tasks/templates/base.html:23
+#: tasks/templates/base.html:24
 msgid "log out"
 msgstr "atsijungti"
 
-#: tasks/templates/base.html:25
+#: tasks/templates/base.html:26
 msgid "log in"
 msgstr "prisijungti"
 
-#: tasks/templates/base.html:26
+#: tasks/templates/base.html:27
 msgid "sign up"
 msgstr "registracija"
 
 #: tasks/templates/tasks/index.html:4
 msgid "users"
 msgstr "vartotojai"
+
+#: tasks/templates/tasks/project_create.html:2
+msgid "create a project at"
+msgstr "sukurti projektą"
+
+#: tasks/templates/tasks/project_create.html:4
+msgid "create a project"
+msgstr "sukurti projektą"
+
+#: tasks/templates/tasks/project_create.html:8
+msgid "create"
+msgstr "sukurti"
+
+#: tasks/templates/tasks/project_delete.html:2
+msgid "deleting"
+msgstr "trinamas"
+
+#: tasks/templates/tasks/project_delete.html:4
+msgid "deleting project"
+msgstr "trinamas projektas"
+
+#: tasks/templates/tasks/project_delete.html:9
+msgid "are you sure you want to delete project"
+msgstr "ar tikrai norite ištrinti projektą"
+
+#: tasks/templates/tasks/project_delete.html:11
+msgid "all project's"
+msgstr "visos projekto"
+
+#: tasks/templates/tasks/project_delete.html:12
+msgid "tasks will be deleted"
+msgstr "užduotys bus ištrintos"
+
+#: tasks/templates/tasks/project_delete.html:15
+#: tasks/templates/tasks/project_update.html:8
+msgid "confirm"
+msgstr "patvirtinti"
+
+#: tasks/templates/tasks/project_delete.html:16
+msgid "change mind"
+msgstr "persigalvoti"
+
+#: tasks/templates/tasks/project_detail.html:7
+msgid "edit"
+msgstr "redaguoti"
+
+#: tasks/templates/tasks/project_detail.html:8
+msgid "delete"
+msgstr "ištrinti"
+
+#: tasks/templates/tasks/project_list.html:6
+msgid "create new"
+msgstr "sukurti naują"
+
+#: tasks/templates/tasks/project_list.html:9
+msgid "filter by owner"
+msgstr "filtruoti pagal sąvininką"
+
+#: tasks/templates/tasks/project_list.html:23
+msgid "no projects found"
+msgstr "proejktų nerasta"
+
+#: tasks/templates/tasks/project_update.html:2
+msgid "editing"
+msgstr "redaguojamas"
+
+#: tasks/templates/tasks/project_update.html:4
+msgid "editing project"
+msgstr "redaguojamas projektas"
 
 #: tasks/templates/tasks/task_detail.html:10
 msgid "created"
@@ -128,3 +202,16 @@ msgstr "sąrašas"
 #: tasks/templates/tasks/task_list.html:13
 msgid "no tasks found"
 msgstr "užduočių nerasta"
+
+#: tasks/views.py:75
+msgid "project created successfully"
+msgstr "projektas sėkmingai sukurtas"
+
+#: tasks/views.py:92
+#| msgid "project created successfully"
+msgid "project updated successfully"
+msgstr "projektas sėkmingai atnaujintas"
+
+#: tasks/views.py:107
+msgid "project deleted successfully"
+msgstr "projektas sėkmingai ištrintas"
