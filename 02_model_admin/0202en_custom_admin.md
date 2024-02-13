@@ -6,7 +6,7 @@ By just registering models to Django Administration, we get a default model admi
 
 * Customized representation in model admin's list view
 * Admin List Filters
-* Admin List Saarch
+* Admin List Search
 * Admin List Editing
 * Customized fieldsets in the change form
 * Custom funcion representations in model admin's list view
