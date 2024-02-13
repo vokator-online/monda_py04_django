@@ -1,6 +1,7 @@
-from django.db import models
-from django.utils.translation import gettext as _
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.urls import reverse
+from django.utils.translation import gettext as _
 
 
 class Project(models.Model):
@@ -12,13 +13,16 @@ class Project(models.Model):
         related_name='projects',
     )
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = _("project")
         verbose_name_plural = _("projects")
         ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("project_detail", kwargs={"pk": self.pk})
 
 
 class Task(models.Model):
@@ -41,10 +45,13 @@ class Task(models.Model):
     is_done = models.BooleanField(_("is done"), default=False, db_index=True)
     deadline = models.DateTimeField(_("deadline"), null=True, blank=True, db_index=True)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = _("task")
         verbose_name_plural = _("tasks")
         ordering = ['is_done', '-created_at']
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("task_detail", kwargs={"pk": self.pk})

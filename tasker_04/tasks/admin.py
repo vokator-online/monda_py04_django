@@ -5,9 +5,16 @@ from . import models
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'total_tasks', 'recent_undone_tasks', 'owner']
+    list_display_links = ['name']
     list_filter = ['owner']
     search_fields = ['name']
-    list_display_links = ['name']
+    fieldsets = (
+        (None, {
+            "fields": (
+                'name', 'owner',
+            ),
+        }),
+    )
 
     def total_tasks(self, obj: models.Project):
         return obj.tasks.count()
@@ -33,17 +40,18 @@ class TaskAdmin(admin.ModelAdmin):
     list_editable = ['is_done']
     readonly_fields = ['created_at', 'updated_at', 'id']
     fieldsets = (
-        (_('General'), {
+        (_("general").title(), {
             "fields": (
-                ('name', 'deadline', 'is_done'), 'description',
+                ('name', 'deadline'),
+                'description', 'is_done',
             ),
         }),
-        (_('Ownership'), {
+        (_("ownership").title(), {
             "fields": (
                 ('owner', 'project'),
             ),
         }),
-        (_('Temporal Tracking'), {
+        (_("temporal tracking").title(), {
             "fields": (
                 ('created_at', 'updated_at', 'id'),
             ),
