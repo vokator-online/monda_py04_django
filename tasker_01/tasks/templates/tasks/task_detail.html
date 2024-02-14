@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} | {{ task }}{% endblock title %}
 {% block content %}
-<h1><a href="{% url "task_done" task.pk %}">
+<h1><a href="{% url "task_done" task.pk %}?next={{ request.path }}">
     {% if task.is_done %}&#x2611;{% else %}&#x2610;{% endif %}</a>
     {{ task.name }}</h1>
 <p>{{ task.owner }} / {{ task.project }}</p>

@@ -54,6 +54,8 @@ def task_done(request: HttpRequest, pk:int) -> HttpResponse:
     task.is_done = not task.is_done
     task.save()
     messages.success(request, f"{_('task').capitalize()} #{task.pk} {_('marked as')} {_('done') if task.is_done else _('undone')}.")
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next'))
     return redirect(task_list)
 
 @login_required
