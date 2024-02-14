@@ -1,6 +1,6 @@
 # Functional permissioned CRUD Views
 
-We have created most important CRUD based workflow for a permissioned object Project last time. Now we will improve our Task views with similar functionality but keep them function based. Later you will have an option to refactor all of them to class based views.
+We have created most important CRUD based workflow for a permissioned object Project last time. Now we will improve our Task views with similar functionality but keep them function based. Later you will have an option to refactor all of them to class based views if you wish so.
 
 ## Objectives
 
