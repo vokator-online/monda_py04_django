@@ -28,7 +28,7 @@ In `views.py` we just add the view function:
 ```Python
 def task_list(request: HttpRequest) -> HttpResponse:
     return render(request, 'tasks/task_list.html', {
-        'task_list': models.Task.objects.all()
+        'task_list': models.Task.objects.all(),
     })
 ```
 
