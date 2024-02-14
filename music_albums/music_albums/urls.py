@@ -1,5 +1,5 @@
 """
-URL configuration for music_album project.
+URL configuration for music_albums project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -15,8 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import include
 from django.urls import path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('dashboard/', views.Home.as_view(), name='home'),
+    path('grappelli/', include('grappelli.urls')),
 ]
