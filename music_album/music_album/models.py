@@ -5,7 +5,7 @@ import django.db.models
 import datetime
 
 # Music Albums imports
-from music_album import common
+from . import common
 
 
 class Label(django.db.models.Model):

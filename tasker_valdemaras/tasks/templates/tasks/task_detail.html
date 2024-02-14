@@ -8,7 +8,7 @@
 <p>Deadline: {{ task.deadline }}</p>
 <p>{{ task.description }}</p>
 <p>Created: {{ task.created_at }}{% if task.created_at != task.updated_at %},
-        updated: {{ task.updated_at }}
-    {% endif %}
+    updated: {{ task.updated_at }}
+{% endif %}
 </p>
 {% endblock content %}

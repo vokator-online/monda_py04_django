@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from . import models
 from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from . import models
 
 def index(request: HttpRequest) -> HttpResponse:
     context = {
@@ -13,10 +13,15 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def task_list(request: HttpRequest) -> HttpResponse:
     return render(request, 'tasks/task_list.html', {
-        'task_list': models.Task.objects.all()
+        'task_list': models.Task.objects.all(),
     })
 
-def task_detail(request: HttpRequest, pk:int) -> HttpResponse:
+def task_detail(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, 'tasks/task_detail.html', {
-        'task': get_object_or_404(models.Task, pk=pk)
+        'task': get_object_or_404(models.Task, pk=pk),
     })
+
+def task_done(...):
+    # ...
+    messages.success(request, f"Task #{task.pk} marked as {'done' if task.is_done else 'undone'}.")
+    return redirect(task_list)
