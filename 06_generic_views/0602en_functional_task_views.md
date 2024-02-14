@@ -19,26 +19,33 @@ Let's begin with something simple - adding a few filters and a search by name qu
 ```Python
 def task_list(request: HttpRequest) -> HttpResponse:
     queryset = models.Task.objects
-    project_pk = request.GET.get('project_pk')
-    if project_pk:
-        project = get_object_or_404(models.Project, pk=project_pk)
-        queryset = queryset.filter(project=project)
     owner_username = request.GET.get('owner')
     if owner_username:
         owner = get_object_or_404(get_user_model(), username=owner_username)
         queryset = queryset.filter(owner=owner)
+        projects = models.Project.objects.filter(owner=owner)
+    elif request.user.is_authenticated:
+        projects = models.Project.objects.filter(owner=request.user)
+    else:
+        projects = models.Project.objects
+    project_pk = request.GET.get('project_pk')
+    if project_pk:
+        project = get_object_or_404(models.Project, pk=project_pk)
+        queryset = queryset.filter(project=project)
     search_name = request.GET.get('search_name')
     if search_name:
         queryset = queryset.filter(name__icontains=search_name)
     context = {
         'task_list': queryset.all(),
-        'project_list': models.Project.objects.all(),
+        'project_list': projects.all(),
         'user_list': get_user_model().objects.all().order_by('username'),
     }
     return render(request, 'tasks/task_list.html', context)
 ```
 
 The query process is quite simple: we just collect model query parameter from `request.GET`, then verify if object related to that parameter exists, and update the queryset or throw out 404 page depending on the result. Then we pack the projects and user lists, together with the resulting task list from the queryset, into the `context` which we pass to the returning `render` function.
+
+Note that if we filter by user, we also filter project's filter by the same user as well, and otherwise leave the projects by current user.
 
 Now let's fix up the template and add the toolbar with filter controls and search box:
 
@@ -160,3 +167,76 @@ def task_create(request: HttpRequest) -> HttpResponse:
 
 And it would be very nice to have a date picker. We can fix that by overriding `DateTime` widget in [forms.py](../tasker_04/tasks/forms.py) and using it in the form.
 
+## Update (edit) Task view
+
+We will reuse the same form and the view is quite similar. The difference is that we pass a keyword argument `pk` to the view, which helps to query for the object to be edited. We also pass the object to the form's instance. Processing is exactly the same:
+
+```Python
+@login_required
+def task_update(request: HttpRequest, pk: int) -> HttpResponse:
+    task = get_object_or_404(models.Task, pk=pk, owner=request.user)
+    if request.method == "POST":
+        form = forms.TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _("task edited successfully"))
+            return redirect('task_detail', pk=pk)
+    else:
+        form = forms.TaskForm(instance=task)
+    form.fields['project'].queryset = form.fields['project'].queryset.filter(owner=request.user)
+    return render(request, 'tasks/task_update.html', {'form': form})
+```
+
+URL pattern:
+
+```Python
+    path('task/<int:pk>/edit/', views.task_update, name='task_update'),
+```
+
+Then the [task_update.html](../tasker_04/tasks/templates/tasks/task_update.html) template which is so painfully similar to [project_update.html](../tasker_04/tasks/templates/tasks/project_update.html) template. And this template is also interchangable for the class based view.
+
+Last thing - adding the mighty `Edit` button to the `task_detail.html`:
+
+```HTML
+{% if task.owner == request.user %}
+    <p>
+        <a class="button" href="{% url "task_update" task.pk %}">{% trans "edit"|capfirst %}</a>
+        {% comment %} <a class="button" href="{% url "task_delete" task.pk %}">{% trans "delete"|capfirst %}</a> {% endcomment %}
+    </p>
+{% endif %}
+```
+
+The delete button follows the same logic, so we place it there as we will need it very very soon, just we comment it out if we want to test edit functionality first, which we can do now.
+
+## Deleting Task view
+
+While we can implement task deletion in a similar way it is currently with `task_done` view, we should follow the good practice and require user confirmation via POST form. That way we impose some challenge for user interactions have impact and cannot be undone. However the form is empty in this case.
+
+```Python
+@login_required
+def task_delete(request: HttpRequest, pk: int) -> HttpResponse:
+    task = get_object_or_404(models.Task, pk=pk, owner=request.user)
+    if request.method == "POST":
+        task.delete()
+        messages.success(request, _("task deleted successfully"))
+        return redirect('task_list')
+    return render(request, 'tasks/task_delete.html', {'task': task})
+```
+
+URL pattern:
+
+```Python
+    path('task/<int:pk>/delete/', views.task_delete, name='task_delete'),
+```
+
+and the [template](../tasker_04/tasks/templates/tasks/task_delete.html) for the confirmation, again, fully interchangable with class based view.
+
+To test, just uncomment the delete button in the [task_detail.html](../tasker_04/tasks/templates/tasks/task_detail.html) template.
+
+## Conclusions
+
+Function based views have quite much redundant boilerplate code, however, are a bit more flexible in how things are done, easier to customize. However, such function based views can grow out into spaghetti code very easily.
+
+## Assignment
+
+Implement user permissioned CRUD workflow for one or more models as function based views in your Blog project.
