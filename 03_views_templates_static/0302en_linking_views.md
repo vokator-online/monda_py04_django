@@ -212,14 +212,27 @@ And we need to create the notifications section in the `base.html` file, that al
     <main> ...
 ```
 
-Now the message will be displayed whenever the message will be marked done or undone. It looks too raw for our liking, but for now it is important to just make it work. The point is, that with this little amount of code we can make it work. Then, we take care of the styling. And just before we do that, why not to make that marking done work from the detail view as well? The only change needed there is to add the link around the checkboxes logic in `list_detail.html`:
+Now the message will be displayed whenever the message will be marked done or undone. It looks too raw for our liking, but for now it is important to just make it work. The point is, that with this little amount of code we can make it work. Then, we take care of the styling. And just before we do that, why not to make that marking done work from the detail view as well? The only change needed there is to add the link around the checkboxes logic in `list_detail.html`. However, we add the `next` GET variable to the URL, which values to the current page:
 
 ```HTML
 ...
-<h1><a href="{% url "task_done" task.pk %}">
+<h1><a href="{% url "task_done" task.pk %}?next={{ request.path }}">
     {% if task.is_done %}&#x2611;{% else %}&#x2610;{% endif %}</a>
     {{ task.name }}</h1>
 ...
+```
+
+So we can check for it in the `task_done` view, and it it is set, redirect to the value instead. This makes user experience much smoother with very little effort on coding side, because when user uses `mark_done` view, it redirects back to the detail view. Final code of the `task_done` view:
+
+```Python
+def task_done(request: HttpRequest, pk:int) -> HttpResponse:
+    task = get_object_or_404(models.Task, pk=pk)
+    task.is_done = not task.is_done
+    task.save()
+    messages.success(request, f"Task #{task.pk} marked as {'done' if task.is_done else 'undone'}.")
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next'))
+    return redirect(task_list)
 ```
 
 ## Assignment
