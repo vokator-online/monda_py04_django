@@ -60,6 +60,21 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='album',
             name='rating',
-            field=models.IntegerField(blank=True, choices=[(1, '★★★★★'), (2, '★★★★★'), (3, '★★★★★'), (4, '★★★★★'), (5, '★★★★★')], verbose_name='Rating'),
+            field=models.IntegerField(blank=True, choices=[(1, '★'), (2, '★★'), (3, '★★★'), (4, '★★★★'), (5, '★★★★★')], verbose_name='Rating'),
+        ),
+        migrations.AddField(
+            model_name='album',
+            name='is_active',
+            field=models.BooleanField(default=True, verbose_name='Is Active?'),
+        ),
+        migrations.AddField(
+            model_name='artist',
+            name='is_active',
+            field=models.BooleanField(default=True, verbose_name='Is Active?'),
+        ),
+        migrations.AddField(
+            model_name='label',
+            name='is_active',
+            field=models.BooleanField(default=True, verbose_name='Is Active?'),
         ),
     ]
