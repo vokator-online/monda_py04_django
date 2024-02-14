@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% block title %}{{ block.super }} list{% endblock title %}
 {% block content %}
-<h1>Tasks</h1>
+<h1>Tasks<span style="float:right;">deadline</span></h1>
 <ul>
+    <li class="list-table-header">
+        <span>name</span>
+        <span style="float:right;">deadline</span>
+    </li>
 {% for task in task_list %}
     <li><a href="{% url "task_done" task.pk %}">
         {% if task.is_done %}&#x2611;{% else %}&#x2610;{% endif %}</a>
