@@ -22,7 +22,7 @@ def signup(request: HttpRequest) -> HttpResponse:
     })
 
 @login_required
-def user_detail(request: HttpRequest, username: str | None = None):
+def user_detail(request: HttpRequest, username: str | None = None) -> HttpResponse:
     if username:
         user = get_object_or_404(User, username=username)
     else:

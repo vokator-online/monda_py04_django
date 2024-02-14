@@ -287,4 +287,3 @@ We have created a basic minimalist style for our app. We will expand on the styl
 ## Assignment
 
 Style the base template of your blog app. You can experiment with the grid as well. Try things out.
-
