@@ -1,0 +1,70 @@
+body {
+    background-color: #cccccc;
+    font-family: sans-serif;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    margin: 0; padding: 0;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #999999;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 0.5rem;
+}
+
+header ul.nav {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin-block: 0.5rem;
+    padding-inline: 0;
+    gap: 0.5rem;
+}    
+
+header ul.nav li a, header ul.nav form button {
+    background-color: #aaaaaa;
+    display: block;
+    margin: 0;
+    padding: 0.5rem;
+    border: 0;
+    border-bottom: 2px solid #004488;
+    cursor: pointer;
+    color: #004488;
+    font-size: 100%;
+    border-radius: 0.5rem;
+}
+
+header ul.nav li a:hover, header ul.nav form button:hover {
+    background-color: #b8b8b8;
+    border-bottom: 2px solid #0055cc;
+    color: #0055cc;
+    text-decoration: none;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    background-color: #666666;
+}
+
+a {
+    color: #004488;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+a:hover {
+    color: #0055cc;
+    text-decoration: underline;
+}
