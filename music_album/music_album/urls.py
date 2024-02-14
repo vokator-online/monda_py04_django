@@ -1,5 +1,5 @@
 """
-URL configuration for tasker_new project.
+URL configuration for music_album project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
