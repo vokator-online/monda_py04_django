@@ -137,3 +137,11 @@ section.messages .message {
 .message-error {
     background-color: #ffaaaa;
 }
+
+.spacer {
+    flex-grow: 1;
+}
+header form select {
+    margin: 1rem;
+    font-size: 100%;
+}
