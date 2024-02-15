@@ -171,4 +171,4 @@ Next we are going to do the same with `Task` views, but we will intentionally do
 
 ## Assignment
 
-Create a permissioned management workflow for Category (or any other) object of your blog project frontend, which is one-to-many related to Page and User. 
+Create a permissioned object management (udpate/delete) workflow for `Category` (or any other) model of your blog project frontend, which is one-to-many related to blog Page and User. URL patterns and HTML templates as well.

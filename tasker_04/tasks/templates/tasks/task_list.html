@@ -23,7 +23,7 @@
 </div>
 <ul>
 {% for task in task_list %}
-    <li><a href="{% url "task_done" task.pk %}">
+    <li><a href="{% url "task_done" task.pk %}?next={{ next|urlencode }}">
         {% if task.is_done %}&#x2611;{% else %}&#x2610;{% endif %}</a>
         <a href="{% url "task_detail" task.pk %}">{{ task.name }}</a>
         <span style="float:right;">{{ task.deadline }}</span>

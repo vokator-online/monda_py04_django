@@ -38,6 +38,16 @@ Note here that so called `f""` string is not working correctly with gettext and 
 
 In every app which has translatable strings, we need to create `locale` folder. Then we can use `manage.py` command `makemessages` with language/locale argument, for example `-l=lt` for lithuanian language. We will find [django.po](../tasker_04/tasks/locale/lt/LC_MESSAGES/django.po) file in `locale/lt/LC_MESSAGES` folder. We can open them with VS Code and translate their contents.
 
+If you get an error that gettext is not found and required, you can install it with apt:
+
+```bash
+(venv) bash:~/$ sudo apt install gettext
+```
+
+...and then the `django makemessages -l=lt` command above should work. In some cases reloading the terminal, VS Code or even WSL might be required if it doesn't. 
+
+For macOS, install with brew or ports, and reboot is required.
+
 Then, once translations are ready, we need to compile them by running `manage.py` command `compilemessages`.
 
 ```bash

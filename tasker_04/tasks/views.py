@@ -37,10 +37,12 @@ def task_list(request: HttpRequest) -> HttpResponse:
     search_name = request.GET.get('search_name')
     if search_name:
         queryset = queryset.filter(name__icontains=search_name)
+    next = request.path + '?' + '&'.join([f"{key}={value}" for key, value in request.GET.items()])
     context = {
         'task_list': queryset.all(),
         'project_list': projects.all(),
         'user_list': get_user_model().objects.all().order_by('username'),
+        'next': next,
     }
     return render(request, 'tasks/task_list.html', context)
 
@@ -49,16 +51,23 @@ def task_detail(request: HttpRequest, pk:int) -> HttpResponse:
         'task': get_object_or_404(models.Task, pk=pk)
     })
 
+@login_required
 def task_done(request: HttpRequest, pk:int) -> HttpResponse:
     task = get_object_or_404(models.Task, pk=pk)
-    task.is_done = not task.is_done
-    task.save()
-    messages.success(request, "{} {} {} {}".format(
-        _('task').capitalize(),
-        task.name,
-        _('marked as'),
-        _('done') if task.is_done else _('undone'),
-    ))
+    if request.user in [task.owner, task.project.owner]:
+        task.is_done = not task.is_done
+        task.save()
+        messages.success(request, "{} {} {} {}".format(
+            _('task').capitalize(),
+            task.name,
+            _('marked as'),
+            _('done') if task.is_done else _('undone'),
+        ))
+    else:
+        messages.error(request, "{}: {}".format(
+            _("permission error").title(),
+            _("you must be the owner of either the task itelf or it's project"),
+        ))
     if request.GET.get('next'):
         return redirect(request.GET.get('next'))
     return redirect(task_list)
