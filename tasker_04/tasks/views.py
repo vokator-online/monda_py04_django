@@ -53,7 +53,12 @@ def task_done(request: HttpRequest, pk:int) -> HttpResponse:
     task = get_object_or_404(models.Task, pk=pk)
     task.is_done = not task.is_done
     task.save()
-    messages.success(request, f"{_('task').capitalize()} #{task.pk} {_('marked as')} {_('done') if task.is_done else _('undone')}.")
+    messages.success(request, "{} {} {} {}".format(
+        _('task').capitalize(),
+        task.name,
+        _('marked as'),
+        _('done') if task.is_done else _('undone'),
+    ))
     if request.GET.get('next'):
         return redirect(request.GET.get('next'))
     return redirect(task_list)

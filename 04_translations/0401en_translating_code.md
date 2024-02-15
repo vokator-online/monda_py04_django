@@ -23,9 +23,16 @@ from django.utils.translation import gettext_lazy as _
 # ...
 def task_done(request: HttpRequest, pk:int) -> HttpResponse:
     # ...
-    messages.success(request, f"{_('task').capitalize()} #{task.pk} {_('marked as')} {_('done') if task.is_done else _('undone')}.")
+    messages.success(request, "{} {} {} {}".format(
+        _('task').capitalize(),
+        task.name,
+        _('marked as'),
+        _('done') if task.is_done else _('undone'),
+    ))
     return redirect(task_list)
 ```
+
+Note here that so called `f""` string is not working correctly with gettext and so with Django's `makemessages` command, so we are forced down to use `.format()` string method instead.
 
 ## Generating translation files and translating their contents
 
