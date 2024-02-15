@@ -162,3 +162,7 @@ div.fog {
     padding: 2rem;
     border-radius: 1rem;
 }
+
+footer .icon {
+    max-height: 24px;
+}
