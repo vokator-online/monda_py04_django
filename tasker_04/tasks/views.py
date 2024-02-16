@@ -9,13 +9,38 @@ from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import datetime
 from . import models, forms
 
+User = get_user_model()
+
 def index(request: HttpRequest) -> HttpResponse:
+    tasks = models.Task.objects
+    undone_tasks = tasks.filter(is_done=False)
+    common_dashboard = [
+        (_('users').capitalize(), User.objects.count()),
+        (_('projects').capitalize(), models.Project.objects.count()),
+        (_('tasks').capitalize(), tasks.count()),
+        (_('undone tasks').title(), undone_tasks.count()),
+        (_('overdue tasks').title(), undone_tasks.filter(deadline__lte=datetime.now()).count()),
+    ]
+    if request.user.is_authenticated:
+        user_tasks = tasks.filter(owner=request.user)
+        user_undone_tasks = user_tasks.filter(is_done=False)
+        user_dashboard = [
+            (_('projects').capitalize(), models.Project.objects.filter(owner=request.user).count()),
+            (_('tasks').capitalize(), user_tasks.count()),
+            (_('undone tasks').title(), user_undone_tasks.count()),
+            (_('overdue tasks').title(), user_undone_tasks.filter(deadline__lte=datetime.now()).count()),
+        ]
+        undone_tasks = user_undone_tasks.all()[:5]
+    else:
+        user_dashboard = None
+        undone_tasks = undone_tasks.all()[:5]
     context = {
-        'projects_count': models.Project.objects.count(),
-        'tasks_count': models.Task.objects.count(),
-        'users_count': models.get_user_model().objects.count(),
+        'common_dashboard': common_dashboard,
+        'user_dashboard': user_dashboard,
+        'undone_tasks': undone_tasks,
     }
     return render(request, 'tasks/index.html', context)
 
@@ -23,7 +48,7 @@ def task_list(request: HttpRequest) -> HttpResponse:
     queryset = models.Task.objects
     owner_username = request.GET.get('owner')
     if owner_username:
-        owner = get_object_or_404(get_user_model(), username=owner_username)
+        owner = get_object_or_404(User, username=owner_username)
         queryset = queryset.filter(owner=owner)
         projects = models.Project.objects.filter(owner=owner)
     elif request.user.is_authenticated:
@@ -41,7 +66,7 @@ def task_list(request: HttpRequest) -> HttpResponse:
     context = {
         'task_list': queryset.all(),
         'project_list': projects.all(),
-        'user_list': get_user_model().objects.all().order_by('username'),
+        'user_list': User.objects.all().order_by('username'),
         'next': next,
     }
     return render(request, 'tasks/task_list.html', context)
@@ -121,7 +146,7 @@ class ProjectListView(generic.ListView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['user_list'] = get_user_model().objects.all().order_by('username')
+        context['user_list'] = User.objects.all().order_by('username')
         return context
 
 

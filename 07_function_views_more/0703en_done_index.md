@@ -61,3 +61,90 @@ Find a way to persist list filters while browsing task details editing/deleting 
 
 ## Making index dashboard more powerful and beautiful
 
+First we will completely refactor the view, restructurizing it for more convenient procedural dashboard rendering:
+
+* creating separate lists for dashboard widgets as tuples, containing widget title as 0th, and data as 1st item - one for common, another for user dashboard
+* to reduce amount of code we will use intermediate variables for querysets
+* pack dashboards and up to 5 `undone_tasks` list to context
+
+```Python
+User = get_user_model()
+
+def index(request: HttpRequest) -> HttpResponse:
+    tasks = models.Task.objects
+    undone_tasks = tasks.filter(is_done=False)
+    common_dashboard = [
+        (_('users').capitalize(), User.objects.count()),
+        (_('projects').capitalize(), models.Project.objects.count()),
+        (_('tasks').capitalize(), tasks.count()),
+        (_('undone tasks').title(), undone_tasks.count()),
+        (_('overdue tasks').title(), undone_tasks.filter(deadline__lte=datetime.now()).count()),
+    ]
+    if request.user.is_authenticated:
+        user_tasks = tasks.filter(owner=request.user)
+        user_undone_tasks = user_tasks.filter(is_done=False)
+        user_dashboard = [
+            (_('projects').capitalize(), models.Project.objects.filter(owner=request.user).count()),
+            (_('tasks').capitalize(), user_tasks.count()),
+            (_('undone tasks').title(), user_undone_tasks.count()),
+            (_('overdue tasks').title(), user_undone_tasks.filter(deadline__lte=datetime.now()).count()),
+        ]
+        undone_tasks = user_undone_tasks.all()[:5]
+    else:
+        user_dashboard = None
+        undone_tasks = undone_tasks.all()[:5]
+    context = {
+        'common_dashboard': common_dashboard,
+        'user_dashboard': user_dashboard,
+        'undone_tasks': undone_tasks,
+    }
+    return render(request, 'tasks/index.html', context)
+```
+
+as you see, if user is not logged in, we set it's dashboard to empty, and put most recent undone tasks from all users. URL pattern doesn't change, so let's fix up the [index template](../tasker_04/tasks/templates/tasks/index.html) now, which is a complete rewrite.
+
+As you see, we have defined UL's for dashboards with CSS class `dashboard`, so we can style them:
+
+```CSS
+ul.dashboard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+ul.dashboard li {
+    display: inline-block;
+    border: 2px solid #999999;
+    border-radius: 1rem;
+}
+
+ul.dashboard li h3 {
+    border-radius: 1rem;
+    text-align: center;
+}
+
+ul.dashboard li .stat {
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: #ffffff9f;
+    border-radius: 5rem;
+    min-width: 7rem;
+}
+```
+
+Here we made dashboard lists as horizontal inline block lists with wrapping on - meaning if widgets do not fit into screen's width, they will wrap to the next line instead of creating ugly horizontal scrollbar. In some design choices, that actually would also be an option, but it would be then neater to make it `overflow: scroll-x` and limit it's width to `100vw`; We have also done some rounded design for widgets and some spacing. You are free to experiment with the style here.
+
+## Conclusions
+
+While generic views are best to be implemented as class based views, sometimes niche functionality views like `task_done` or `index`, which do not have fit the generics (list/detail/create/update/delete), are better left as function based views.
+
+## Assignment
+
+Improve the dashboard for your blog. You are free to name it as you wish, probably to represent the generic outlook of the content you promote. Maybe it could be a preview of featured articles with "read more" links... Turn on your imagination, because possibilities are endless here.
+
+Similarly to `task_done` view, you can enable `is_public` state for the page, and modify the page detail view to not render the content if user is not superuser or owner, and even for those authenticated users clearly mark the page as "NOT PUBLISHED".
