@@ -61,9 +61,9 @@ Find a way to persist list filters while browsing task details editing/deleting 
 
 ## Making index dashboard more powerful and beautiful
 
-First we will completely refactor the view, restructurizing it for more convenient procedural dashboard rendering:
+First we will completely refactor the view, restructurizing it for more convenient procedural dashboard rendering, adding more widget options while reducing code per widget to both define in the view and render:
 
-* creating separate lists for dashboard widgets as tuples, containing widget title as 0th, and data as 1st item - one for common, another for user dashboard
+* creating separate lists for common and user dashboards widgets as tuples, containing widget title as 0th item, data as 1st item, and optionally link to view as 2nd item
 * to reduce amount of code we will use intermediate variables for querysets
 * pack dashboards and up to 5 `undone_tasks` list to context
 
@@ -75,19 +75,51 @@ def index(request: HttpRequest) -> HttpResponse:
     undone_tasks = tasks.filter(is_done=False)
     common_dashboard = [
         (_('users').capitalize(), User.objects.count()),
-        (_('projects').capitalize(), models.Project.objects.count()),
-        (_('tasks').capitalize(), tasks.count()),
-        (_('undone tasks').title(), undone_tasks.count()),
-        (_('overdue tasks').title(), undone_tasks.filter(deadline__lte=datetime.now()).count()),
+        (
+            _('projects').capitalize(), 
+            models.Project.objects.count(), 
+            reverse('project_list'),
+        ),
+        (
+            _('tasks').capitalize(), 
+            tasks.count(), 
+            reverse('task_list'),
+        ),
+        (
+            _('undone tasks').title(), 
+            undone_tasks.count(),
+        ),
+        (
+            _('overdue tasks').title(), 
+            undone_tasks.filter(deadline__lte=datetime.now()).count(),
+        ),
+        (
+            _('done tasks').capitalize(), 
+            tasks.filter(is_done=True).count(),
+        ),
     ]
     if request.user.is_authenticated:
         user_tasks = tasks.filter(owner=request.user)
         user_undone_tasks = user_tasks.filter(is_done=False)
         user_dashboard = [
-            (_('projects').capitalize(), models.Project.objects.filter(owner=request.user).count()),
-            (_('tasks').capitalize(), user_tasks.count()),
-            (_('undone tasks').title(), user_undone_tasks.count()),
-            (_('overdue tasks').title(), user_undone_tasks.filter(deadline__lte=datetime.now()).count()),
+            (
+                _('projects').capitalize(), 
+                models.Project.objects.filter(owner=request.user).count(), 
+                reverse('project_list') + f"?owner={request.user.username}",
+            ),
+            (
+                _('tasks').capitalize(), 
+                user_tasks.count(),
+                reverse('task_list') + f"?owner={request.user.username}",
+            ),
+            (
+                _('undone tasks').title(), 
+                user_undone_tasks.count(),
+            ),
+            (
+                _('overdue tasks').title(), 
+                user_undone_tasks.filter(deadline__lte=datetime.now()).count(),
+            ),
         ]
         undone_tasks = user_undone_tasks.all()[:5]
     else:
@@ -101,7 +133,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'tasks/index.html', context)
 ```
 
-as you see, if user is not logged in, we set it's dashboard to empty, and put most recent undone tasks from all users. URL pattern doesn't change, so let's fix up the [index template](../tasker_04/tasks/templates/tasks/index.html) now, which is a complete rewrite.
+as you see, if user is not logged in, we set it's dashboard to empty, and put most recent undone tasks from all users. URL pattern doesn't change, so let's fix up the [index template](../tasker_04/tasks/templates/tasks/index.html) now, which is a complete rewrite. There we just render toolbar widgets in for loops, and we check if the link is defined to render anchor tags. Recent tasks list we just repeat the `for loop` from [task_list template](../tasker_04/tasks/templates/tasks/task_list.html), reducing on done/not done logic since all tasks will be not done.
 
 As you see, we have defined UL's for dashboards with CSS class `dashboard`, so we can style them:
 

@@ -3,18 +3,22 @@
 <h2>{% trans "common dashboard"|title %}</h2>
 <ul class="dashboard">
     {% for metric in common_dashboard %}
-        <li><h3>{{ metric.0 }}</h3>
-            <span class="stat">{{ metric.1 }}</span></li>        
+    <li>{% if metric.2 %}<a href="{{ metric.2}}">{% endif %}
+        <h3>{{ metric.0 }}</h3>
+        <span class="stat">{{ metric.1 }}</span>
+        {% if metric.2 %}</a>{% endif %}</li>
     {% endfor %}
 </ul>
 <h2>{% trans "user dashboard"|title %}</h2>
 <ul class="dashboard">
     {% for metric in user_dashboard %}
-        <li><h3>{{ metric.0 }}</h3>
-            <span class="stat">{{ metric.1 }}</span></li>        
+    <li>{% if metric.2 %}<a href="{{ metric.2}}">{% endif %}
+        <h3>{{ metric.0 }}</h3>
+        <span class="stat">{{ metric.1 }}</span>
+        {% if metric.2 %}</a>{% endif %}</li>
     {% empty %}
-        <li><h3>{% trans "log in first" %}</h3>
-            <span class="stat">{% trans "nothing" %}</span></li>
+    <li><h3>{% trans "log in first" %}</h3>
+        <span class="stat">{% trans "nothing" %}</span></li>
     {% endfor %}
 </ul>
 <h2>{% trans "newest things to do"|title %}</h2>

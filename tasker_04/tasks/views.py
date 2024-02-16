@@ -19,19 +19,51 @@ def index(request: HttpRequest) -> HttpResponse:
     undone_tasks = tasks.filter(is_done=False)
     common_dashboard = [
         (_('users').capitalize(), User.objects.count()),
-        (_('projects').capitalize(), models.Project.objects.count()),
-        (_('tasks').capitalize(), tasks.count()),
-        (_('undone tasks').title(), undone_tasks.count()),
-        (_('overdue tasks').title(), undone_tasks.filter(deadline__lte=datetime.now()).count()),
+        (
+            _('projects').capitalize(), 
+            models.Project.objects.count(), 
+            reverse('project_list'),
+        ),
+        (
+            _('tasks').capitalize(), 
+            tasks.count(), 
+            reverse('task_list'),
+        ),
+        (
+            _('undone tasks').title(), 
+            undone_tasks.count(),
+        ),
+        (
+            _('overdue tasks').title(), 
+            undone_tasks.filter(deadline__lte=datetime.now()).count(),
+        ),
+        (
+            _('done tasks').capitalize(), 
+            tasks.filter(is_done=True).count(),
+        ),
     ]
     if request.user.is_authenticated:
         user_tasks = tasks.filter(owner=request.user)
         user_undone_tasks = user_tasks.filter(is_done=False)
         user_dashboard = [
-            (_('projects').capitalize(), models.Project.objects.filter(owner=request.user).count()),
-            (_('tasks').capitalize(), user_tasks.count()),
-            (_('undone tasks').title(), user_undone_tasks.count()),
-            (_('overdue tasks').title(), user_undone_tasks.filter(deadline__lte=datetime.now()).count()),
+            (
+                _('projects').capitalize(), 
+                models.Project.objects.filter(owner=request.user).count(), 
+                reverse('project_list') + f"?owner={request.user.username}",
+            ),
+            (
+                _('tasks').capitalize(), 
+                user_tasks.count(),
+                reverse('task_list') + f"?owner={request.user.username}",
+            ),
+            (
+                _('undone tasks').title(), 
+                user_undone_tasks.count(),
+            ),
+            (
+                _('overdue tasks').title(), 
+                user_undone_tasks.filter(deadline__lte=datetime.now()).count(),
+            ),
         ]
         undone_tasks = user_undone_tasks.all()[:5]
     else:
