@@ -23,13 +23,30 @@ from django.utils.translation import gettext_lazy as _
 # ...
 def task_done(request: HttpRequest, pk:int) -> HttpResponse:
     # ...
-    messages.success(request, f"{_('task').capitalize()} #{task.pk} {_('marked as')} {_('done') if task.is_done else _('undone')}.")
+    messages.success(request, "{} {} {} {}".format(
+        _('task').capitalize(),
+        task.name,
+        _('marked as'),
+        _('done') if task.is_done else _('undone'),
+    ))
     return redirect(task_list)
 ```
+
+Note here that so called `f""` string is not working correctly with gettext and so with Django's `makemessages` command, so we are forced down to use `.format()` string method instead.
 
 ## Generating translation files and translating their contents
 
 In every app which has translatable strings, we need to create `locale` folder. Then we can use `manage.py` command `makemessages` with language/locale argument, for example `-l=lt` for lithuanian language. We will find [django.po](../tasker_04/tasks/locale/lt/LC_MESSAGES/django.po) file in `locale/lt/LC_MESSAGES` folder. We can open them with VS Code and translate their contents.
+
+If you get an error that gettext is not found and required, you can install it with apt:
+
+```bash
+(venv) bash:~/$ sudo apt install gettext
+```
+
+...and then the `django makemessages -l=lt` command above should work. In some cases reloading the terminal, VS Code or even WSL might be required if it doesn't. 
+
+For macOS, install with brew or ports, and reboot is required.
 
 Then, once translations are ready, we need to compile them by running `manage.py` command `compilemessages`.
 

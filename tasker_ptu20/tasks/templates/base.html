@@ -1,5 +1,5 @@
-<!DOCTYPE html>{% load static %}
-<html lang="en">
+<!DOCTYPE html>{% load static i18n %}{% get_current_language as LANGUAGE_CODE %}{% get_available_languages as LANGUAGES %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,9 +10,21 @@
     <header>
         <span class="logo">TASKer</span>
         <ul class="nav">
-            <li><a href="{% url "index" %}">Dashboard</a></li>
-            <li><a href="{% url "task_list" %}">Tasks</a></li>
+            <li><a href="{% url "index" %}">{% trans "dashboard"|capfirst %}</a></li>
+            <li><a href="{% url "task_list" %}">{% trans "tasks"|capfirst %}</a></li>
         </ul>
+        <span class="spacer"></span>
+        <form action="{% url "set_language" %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ redirect_to }}">
+            <select class="laguage" name="language" onchange="this.form.submit();">
+                {% for language in LANGUAGES %}
+                    <option value="{{ language.0 }}" {% if language.0 == LANGUAGE_CODE %}selected{% endif %}>
+                        {{ language.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
     </header>
     <section class="messages">
         {% for message in messages %}
@@ -23,7 +35,8 @@
     <footer>
         {% block footer %}{% endblock footer %}
         <p>&copy; 2024 PTU20 
-            <a style="float:right;" href="https://discord.gg/ywbbZPcY">community on discord</a>
+            <a style="float:right;" href="https://discord.gg/ywbbZPcY">{% trans "community on discord" %}</a>
+            <a style="float:right;" href="https://facebook.com/" target="_blank"><img class="icon" src="{% static "img/icons8-facebook-48.png" %}"></a>
         </p>
     </footer>
 </body>

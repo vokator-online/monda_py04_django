@@ -135,4 +135,8 @@ As usual, styles go to `static/css/style.css`.
 
 Class based generic views have a very clear structure, propagates clean code and simplicity. They can be customized as well as function based views, with the advantage of distributing logic across class methods and avoiding monolithic spaghetti code.
 
-In the next part we will cover generic class based update and deleve views.
+In the next part we will cover generic class based update and delete views.
+
+## Assignment
+
+Create generic class based list, detail and create views for the `Category` or any other blog post and user related model for your blog project. The goal is to figure out object level permissioned workflows. URL patterns and HTML templates as well.
