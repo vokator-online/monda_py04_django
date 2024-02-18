@@ -1,15 +1,15 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load i18n %}
 {% block title %}{{ block.super }} | {{ task }}{% endblock title %}
 {% block content %}
 <h1><a href="{% url "task_done" task.pk %}?next={{ request.path }}">
     {% if task.is_done %}&#x2611;{% else %}&#x2610;{% endif %}</a>
     {{ task.name }}
 </h1>
-<p>Owner: {{ task.owner }} / Project: {{ task.project }}</p>
-<p>Deadline: {{ task.deadline }}</p>
+<p>{% trans "owner"|capfirst %}: {{ task.owner }} / {% trans "project"|capfirst %}: {{ task.project }}</p>
+<p>{% trans "deadline"|capfirst %}: {{ task.deadline }}</p>
 <p>{{ task.description }}</p>
-<p>Created: {{ task.created_at }}{% if task.created_at != task.updated_at %},
-    updated: {{ task.updated_at }}
+<p>{% trans "created"|capfirst %}: {{ task.created_at }}{% if task.created_at != task.updated_at %},
+    {% trans "updated" %}: {{ task.updated_at }}
 {% endif %}
 </p>
 {% endblock content %}

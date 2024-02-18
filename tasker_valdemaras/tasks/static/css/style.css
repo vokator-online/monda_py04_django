@@ -1,5 +1,7 @@
 body {
     background-color: #cccccc;
+    background-image: url('/static/img/flower.jpg');
+    background-size: contain;
     font-family: sans-serif;
     font-size: 16px;
     display: flex;
@@ -9,7 +11,7 @@ body {
 }
 
 header {
-    background-color: #999999;
+    background-color: #999999df;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -53,10 +55,11 @@ header ul.nav li a:hover, header ul.nav form button:hover {
 
 main {
     flex-grow: 1;
+    background-color: #eeeeeebf;
 }
 
 footer {
-    background-color: #666666;
+    background-color: #6666669f;
 }
 
 a {
@@ -71,7 +74,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    background-color: #bbbbbb;
+    background-color: #9999997f;
     border-color: 1px solid #888888;
     padding: 0.5rem;
     margin: 1rem 0;
@@ -136,4 +139,30 @@ section.messages .message {
 
 .message-error {
     background-color: #ffaaaa;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+header form select {
+    margin: 1rem;
+    font-size: 100%;
+}
+
+div.flower {
+    display: inline-block;
+    border: 2px solid #ffcc00;
+    border-radius: 1rem;
+    margin: 1rem;
+}
+
+div.fog {
+    background-color: #ffffff9f;
+    display: inline-block;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+footer .icon {
+    max-height: 24px;
 }

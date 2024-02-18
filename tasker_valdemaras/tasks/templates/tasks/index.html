@@ -1,7 +1,12 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load static i18n %}
 {% block content %}
-<h1>Dashboard</h1>
-<p>Users: {{ users_count }}</p>
-<p>Projects: {{ projects_count }}</p>
-<p>Tasks: {{ tasks_count }}</p>
+<h1>{% trans "dashboard"|capfirst %}</h1>
+<p>{% trans "users"|capfirst %}: {{ users_count }}</p>
+<p>{% trans "projects"|capfirst %}: {{ projects_count }}</p>
+<p>{% trans "tasks"|capfirst %}: {{ tasks_count }}</p>
+<div class="flower">
+    <div class="fog">
+        JOLITA!!!!
+    </div>
+</div>
 {% endblock content %}
