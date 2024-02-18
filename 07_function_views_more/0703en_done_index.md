@@ -74,14 +74,14 @@ def index(request: HttpRequest) -> HttpResponse:
     tasks = models.Task.objects
     undone_tasks = tasks.filter(is_done=False)
     common_dashboard = [
-        (_('users').capitalize(), User.objects.count()),
+        (_('users').title(), User.objects.count()),
         (
-            _('projects').capitalize(), 
+            _('projects').title(), 
             models.Project.objects.count(), 
             reverse('project_list'),
         ),
         (
-            _('tasks').capitalize(), 
+            _('tasks').title(), 
             tasks.count(), 
             reverse('task_list'),
         ),
@@ -94,7 +94,7 @@ def index(request: HttpRequest) -> HttpResponse:
             undone_tasks.filter(deadline__lte=datetime.now()).count(),
         ),
         (
-            _('done tasks').capitalize(), 
+            _('done tasks').title(), 
             tasks.filter(is_done=True).count(),
         ),
     ]
@@ -103,12 +103,12 @@ def index(request: HttpRequest) -> HttpResponse:
         user_undone_tasks = user_tasks.filter(is_done=False)
         user_dashboard = [
             (
-                _('projects').capitalize(), 
+                _('projects').title(), 
                 models.Project.objects.filter(owner=request.user).count(), 
                 reverse('project_list') + f"?owner={request.user.username}",
             ),
             (
-                _('tasks').capitalize(), 
+                _('tasks').title(), 
                 user_tasks.count(),
                 reverse('task_list') + f"?owner={request.user.username}",
             ),

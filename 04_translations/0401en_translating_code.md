@@ -2,6 +2,8 @@
 
 Django supports multilingual web application development right out of the box for the user interface, which we will discover in this section. Database architecture adaptation for multilingual use, on other hand, is left to the app developer. We will NOT touch the multilingual DB architecture aspect.
 
+Due to big changes in almost all files required from now on, we will continue to work with [tasker_04 project](../tasker_04/).
+
 ## Objectives
 
 * Check how python code is marked for translation in models of our app.

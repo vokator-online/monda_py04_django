@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{{ object }} {% trans "at" %} {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>User {{ object.username }}</h1>
+<p>{{ object.first_name }} {{ object.last_name }}</p>
+{% endblock content %}
