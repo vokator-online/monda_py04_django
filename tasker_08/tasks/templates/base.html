@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TASKer{% endblock title %}</title>
     <link rel="stylesheet" href="{% static "css/style.css" %}">
+    {% if request.user.is_authenticated and form %}
+        <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+        {{ form.media }}
+    {% endif %}
 </head>
 <body>
     <header>
-        <span class="logo">TASKer-04</span>
+        <span class="logo">TASKer-08</span>
         <ul class="nav">
             <li><a href="{% url 'index' %}">{% trans "dashboard"|capfirst %}</a></li>
             <li><a href="{% url 'project_list' %}">{% trans "projects"|capfirst %}</a></li>

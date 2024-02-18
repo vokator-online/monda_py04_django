@@ -190,7 +190,7 @@ class ProjectDetailView(generic.DetailView):
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Project
     template_name = 'tasks/project_create.html'
-    fields = ('name', )
+    fields = ('name', 'description', )
 
     def get_success_url(self) -> str:
         messages.success(self.request, _('project created successfully').capitalize())
@@ -208,7 +208,7 @@ class ProjectUpdateView(
     ):
     model = models.Project
     template_name = 'tasks/project_update.html'
-    fields = ('name', )
+    fields = ('name', 'description', )
 
     def get_success_url(self) -> str:
         messages.success(self.request, _('project updated successfully').capitalize())
