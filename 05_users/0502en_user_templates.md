@@ -30,3 +30,10 @@ LOGIN_REDIRECT_URL = '/'
 
 Since settings are being loaded before any URL pattern reverse functionality, we can only define manual URL patterns here. The line above can be added anywhere, best at the very bottom, before loading in local settings.
 
+To test out email sending via console, we can define this [local setting](../tasker_04/tasker/local_settings.py).
+
+```Python
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+```
+
+More information about sending emails with Django can be found in [official Django sending mail documentation](https://docs.djangoproject.com/en/5.0/topics/email/).
