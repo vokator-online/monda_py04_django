@@ -115,7 +115,7 @@ section.messages {
     margin: 0;
 }
 
-section.messages .message, ul.errorlist {
+.message, ul.errorlist {
     padding: 0.5rem;
     margin: 0;
     border-bottom: 1px solid #888888;
