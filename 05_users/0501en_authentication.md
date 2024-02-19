@@ -16,7 +16,9 @@ This is just a reminder of the [0102](../01_new_project_app/0102en_app_config.md
 
 * name the app `user_profile`.
 * URL pattern is `user_profile/`
-* app's verbose name is `user profile` 
+* app's verbose name is `user profile`
+* add `user_profile` to `INSTALLED_APPS` list in [settings.py](../tasker_04/tasker/settings.py)
+* include `user_profile.urls` into project's [urls.py](../tasker_04/tasker/urls.py)
 
 ## User Registration
 
@@ -78,7 +80,7 @@ urlpatterns = [
 ]
 ```
 
-And the HTML template, which we place in, as declared in the view, to `templates/user_profile/signup.html` file:
+And the HTML template, which we place in, as declared in the view, to [user_profile/signup.html](../tasker_04/user_profile/templates/user_profile/signup.html) file:
 
 ```HTML
 {% extends "base.html" %}{% load i18n %}
