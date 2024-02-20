@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TASKer{% endblock title %}</title>
     <link rel="stylesheet" href="{% static "css/style.css" %}">
+    {{ form.media.css }}
+    <script src="{% static 'admin/js/vendor/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'admin/js/vendor/jquery/jquery.min.js' %}"></script>
     {% if request.user.is_authenticated and form %}
         <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
-        {{ form.media }}
     {% endif %}
 </head>
 <body>
@@ -43,15 +45,16 @@
             </select>
         </form>
     </header>
-    <section class="messages">
+    <div class="messages">
         {% for message in messages %}
             <p class="message message-{{ message.tags }}">{{ message }}</p>
         {% endfor %}
-    </section>
+    </div>
     <main>{% block content %}{% endblock content %}</main>
     <footer>
         {% block footer %}{% endblock footer %}
         <p>&copy; 2023-2024 <a href="http://gka.lt" target="_blank">Gero Kodo Akademija</a></p>
     </footer>
+    {{ form.media.js }}
 </body>
 </html>

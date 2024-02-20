@@ -110,7 +110,7 @@ footer a:hover {
     color: #77bbff;
 }
 
-section.messages {
+div.messages {
     padding: 0;
     margin: 0;
 }
@@ -172,6 +172,7 @@ main form label {
     width: 20vw;
     min-width: 15rem;
     font-size: 120%;
+    border-bottom: 1px dotted #999999;
 }
 
 main form input,
@@ -184,4 +185,22 @@ main form button {
 main form .helptext {
     display: block;
     font-size: 90%;
+}
+
+button, .button {
+    background-color: #d8d8d8;
+    border: 1px solid #666666;
+    border-bottom: 2px solid #004488;
+    padding: 0.5rem;
+    font-size: 120%;
+    cursor: pointer;
+}
+
+button:hover, .button:hover {
+    background-color: #dfdfdf;
+    border-bottom: 2px solid #0055cc;
+}
+
+.toolbar {
+    margin: 0.5rem;
 }

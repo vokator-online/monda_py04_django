@@ -5,7 +5,7 @@
 <div class="toolbar">
     <a class="button" href="{% url "task_create" %}">{% trans "create new"|title %}</a>
     <form method="get" action="{{ request.path }}">
-        <select name="owner" onchange="this.form.submit();">
+        {% comment %} <select name="owner" onchange="this.form.submit();">
             <option value="">{% trans "filter by owner"|capfirst %}</option>
             {% for user in user_list %}
                 <option value="{{ user.username }}" {% if user.username == request.GET.owner %}selected{% endif %}>{{ user.first_name }} {{ user.last_name }} ({{ user.username }})</option>
@@ -16,7 +16,9 @@
             {% for project in project_list %}
                 <option value="{{ project.pk }}" {% if project.pk|slugify == request.GET.project_pk %}selected{% endif %}>{{ project.name }}</option>
             {% endfor %}
-        </select>
+        </select> {% endcomment %}
+        {{ search_form.owner }}
+        {{ search_form.project }}
         <input type="text" name="search_name" value="{{ request.GET.search_name }}" placeholder="search by name...">
         <button type="submit">&#128269;</button>
     </form>

@@ -78,6 +78,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def task_list(request: HttpRequest) -> HttpResponse:
     queryset = models.Task.objects
+    search_form = forms.TaskSearchForm(request.GET)
     owner_username = request.GET.get('owner')
     if owner_username:
         owner = get_object_or_404(User, username=owner_username)
@@ -100,6 +101,7 @@ def task_list(request: HttpRequest) -> HttpResponse:
         'project_list': projects.all(),
         'user_list': User.objects.all().order_by('username'),
         'next': next,
+        'search_form': search_form,
     }
     return render(request, 'tasks/task_list.html', context)
 

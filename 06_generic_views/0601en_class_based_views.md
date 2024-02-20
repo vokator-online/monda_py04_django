@@ -127,6 +127,11 @@ button:hover, .button:hover {
     background-color: #dfdfdf;
     border-bottom: 2px solid #0055cc;
 }
+
+.toolbar {
+    margin: 0.5rem;
+}
+
 ```
 
 As usual, styles go to `static/css/style.css`.
