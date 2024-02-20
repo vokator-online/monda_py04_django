@@ -3,6 +3,7 @@
 Previously we have figured out how generic List, Detail and Create views work. Now we will cover Update and Delete functionality.
 
 ## Objectives
+
 * Update the Project
 * Delete the Project
 

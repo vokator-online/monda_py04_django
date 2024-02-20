@@ -204,3 +204,11 @@ button:hover, .button:hover {
 .toolbar {
     margin: 0.5rem;
 }
+
+.toolbar form {
+    display: inline;
+}
+
+.toolbar form select {
+    padding: 0.4rem;
+}
