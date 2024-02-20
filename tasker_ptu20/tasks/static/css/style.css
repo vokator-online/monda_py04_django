@@ -212,3 +212,7 @@ button:hover, .button:hover {
 .toolbar form select {
     padding: 0.4rem;
 }
+
+div.tube {
+    padding: 1rem;
+}

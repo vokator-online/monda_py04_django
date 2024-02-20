@@ -12,6 +12,7 @@ class Project(models.Model):
         on_delete=models.CASCADE,
         related_name='projects',
     )
+    youtube_video_hash = models.CharField(_("YouTube video hash"), max_length=50, null=True, blank=True)
 
     class Meta:
         verbose_name = _("project")
