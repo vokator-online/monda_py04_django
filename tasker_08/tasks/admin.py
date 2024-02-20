@@ -15,6 +15,7 @@ class ProjectAdmin(admin.ModelAdmin):
             ),
         }),
     )
+    autocomplete_fields = ['owner']
 
     def total_tasks(self, obj: models.Project):
         return obj.tasks.count()
@@ -38,6 +39,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_filter = ['is_done', 'deadline', 'created_at']
     search_fields = ['name', 'description', 'project__name', 'owner__last_name', 'owner__username']
     list_editable = ['is_done']
+    autocomplete_fields = ['project', 'owner']
     readonly_fields = ['created_at', 'updated_at', 'id']
     fieldsets = (
         (_("general").title(), {
