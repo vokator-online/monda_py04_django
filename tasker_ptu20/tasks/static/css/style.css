@@ -172,6 +172,7 @@ main form label {
     width: 20vw;
     min-width: 15rem;
     font-size: 120%;
+    border-bottom: 1px dotted #999999;
 }
 
 main form input,
