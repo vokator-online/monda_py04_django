@@ -53,7 +53,7 @@ class TaskAdmin(admin.ModelAdmin):
             ),
         }),
     )
-
+    
 
 
 admin.site.register(models.Project, ProjectAdmin)

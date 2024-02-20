@@ -1,5 +1,5 @@
 """
-ASGI config for tasker_ptu20 project.
+ASGI config for tasker_valdemaras project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tasker_ptu20.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tasker_valdemaras.settings')
 
 application = get_asgi_application()

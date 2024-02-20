@@ -95,8 +95,8 @@ msgid "dashboard"
 msgstr "cruscotto"
 
 #: tasks/templates/base.html:38
-msgid "community on discord"
-msgstr "comunità su discord"
+msgid "community on Discord"
+msgstr "comunità su Discord"
 
 #: tasks/templates/tasks/index.html:4
 msgid "users"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 00:53+0200\n"
+"POT-Creation-Date: 2024-02-15 07:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,19 +97,21 @@ msgstr "užduotis"
 msgid "dashboard"
 msgstr "suvestinė"
 
-#: tasks/templates/base.html:38
-msgid "community on discord"
-msgstr "discordo bendruomenė"
+#: tasks/templates/base.html:26
+msgid "Community on Discord"
+msgstr "Discord bendruomenė"
 
 #: tasks/templates/tasks/index.html:4
 msgid "users"
 msgstr "vartotojai"
 
 #: tasks/templates/tasks/task_detail.html:11
+#| msgid "created at"
 msgid "created"
 msgstr "sukurta"
 
 #: tasks/templates/tasks/task_detail.html:12
+#| msgid "updated at"
 msgid "updated"
 msgstr "atnaujinta"
 
