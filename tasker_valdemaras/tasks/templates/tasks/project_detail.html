@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{{ project.name }} | {{ block.super }}{% endblock title %}
+{% block content %}
+<h1>{{ project.name }}</h1>
+<p>{% trans "owner" %}: <a href="{% url "user_detail" project.owner.username %}">{{ project.owner }}</a></p>
+<p>{% trans "tasks" %}: {{ project.tasks.count }}</p>
+{% endblock content %}

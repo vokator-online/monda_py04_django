@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}AutoClub{% endblock title %}</title>
+    <title>{% block title %}TASKer{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
-        <span class="logo">AutoClub</span>
+        <span class="logo">TASKer</span>
         <ul class="nav">
             <li><a href="{% url "index" %}">{% trans "dashboard"|capfirst %}</a></li>
+            <li><a href="{% url "project_list" %}">{% trans "projects"|capfirst %}</a></li>
             <li><a href="{% url "task_list" %}">{% trans "tasks"|capfirst %}</a></li>
         </ul>
         <span class="spacer"></span>
@@ -39,11 +40,11 @@
             </select>
         </form>
     </header>
-    <div class="messages">
+    <section class="messages">
         {% for message in messages %}
             <p class="message message-{{ message.tags }}">{{ message }}</p>
         {% endfor %}
-    </div>
+    </section>
     <main>{% block content %}{% endblock content %}</main>
     <footer>
         {% block footer %}{% endblock footer %}

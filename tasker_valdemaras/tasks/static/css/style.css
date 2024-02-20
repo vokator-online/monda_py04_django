@@ -1,17 +1,17 @@
 body {
-    background-color: #282828;
-    background-image: url('/static/img/background.png');
-    background-repeat: repeat;
-    font-family: Verdana;
+    background-color: #cccccc;
+    background-image: url('/static/img/flower.jpg');
+    background-size: contain;
+    font-family: sans-serif;
     font-size: 16px;
     display: flex;
     flex-direction: column;
     margin: 0; padding: 0;
     min-height: 100vh;
-    color: #cccccc;
 }
 
 header {
+    background-color: #999999df;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -34,39 +34,32 @@ header ul.nav {
 }    
 
 header ul.nav li a, header ul.nav form button {
-    display: inline-block;
-    margin-top: 2em;
-    background: #2E9AFE;
-    border-radius: 5px;
-    line-height: 4em;
-    padding: 0 3em;
-    -webkit-transition: all .25s ease-in-out;
-    -moz-transition: all .25s ease-in-out;
-    -ms-transition: all .25s ease-in-out;
-    -o-transition: all .25s ease-in-out;
-    transition: all .25s ease-in-out;
-    letter-spacing: 0.25em;
-    text-decoration: none;
-    text-transform: uppercase;
-    outline: 0;
-    white-space: nowrap;
-    font-family: Verdana;
-    font-weight: 700;
-    font-size: 0.80em !important;
-    color: #fff !important;
+    background-color: #aaaaaa;
+    display: block;
+    margin: 0;
+    padding: 0.5rem;
+    border: 0;
+    border-bottom: 2px solid #004488;
+    cursor: pointer;
+    color: #004488;
+    font-size: 100%;
+    border-radius: 0.5rem;
 }
 
 header ul.nav li a:hover, header ul.nav form button:hover {
-    background: #BB1717;
-    -webkit-transition: all .25s ease-in-out;
-    -moz-transition: all .25s ease-in-out;
-    -ms-transition: all .25s ease-in-out;
-    -o-transition: all .25s ease-in-out;
-    transition: all .25s ease-in-out;
+    background-color: #b8b8b8;
+    border-bottom: 2px solid #0055cc;
+    color: #0055cc;
+    text-decoration: none;
 }
 
 main {
     flex-grow: 1;
+    background-color: #eeeeeebf;
+}
+
+footer {
+    background-color: #6666669f;
 }
 
 a {
@@ -81,6 +74,8 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    background-color: #9999997f;
+    border-color: 1px solid #888888;
     padding: 0.5rem;
     margin: 1rem 0;
 }
@@ -154,7 +149,7 @@ header form select {
     font-size: 100%;
 }
 
-div.background {
+div.flower {
     display: inline-block;
     border: 2px solid #ffcc00;
     border-radius: 1rem;
@@ -169,7 +164,7 @@ div.fog {
 }
 
 footer .icon {
-    max-height: 50px;
+    max-height: 24px;
 }
 
 main form label {
@@ -177,6 +172,7 @@ main form label {
     width: 20vw;
     min-width: 15rem;
     font-size: 120%;
+    border-bottom: 1px dotted #999999;
 }
 
 main form input,
@@ -189,4 +185,22 @@ main form button {
 main form .helptext {
     display: block;
     font-size: 90%;
+}
+
+button, .button {
+    background-color: #d8d8d8;
+    border: 1px solid #666666;
+    border-bottom: 2px solid #004488;
+    padding: 0.5rem;
+    font-size: 120%;
+    cursor: pointer;
+}
+
+button:hover, .button:hover {
+    background-color: #dfdfdf;
+    border-bottom: 2px solid #0055cc;
+}
+
+.toolbar {
+    margin: 0.5rem;
 }
