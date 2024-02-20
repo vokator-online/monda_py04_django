@@ -1,8 +1,37 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views import generic
 from . import models
+
+
+class ProjectListView(generic.ListView):
+    model = models.Project
+    template_name = 'tasks/project_list.html'
+
+
+class ProjectDetailView(generic.DetailView):
+    model = models.Project
+    template_name = 'tasks/project_detail.html'
+
+
+class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
+    model = models.Project
+    template_name = 'tasks/project_create.html'
+    fields = ('name', )
+    
+    def get_success_url(self) -> str:
+        messages.success(self.request, 
+            _('project created succesfully').capitalize())
+        return reverse('project_list')
+    
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 
 def index(request: HttpRequest) -> HttpResponse:
     context = {

@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{{ block.super }} {% trans "projects" %}{% endblock title %}
+{% block content %}
+<h1>{% trans "projects"|capfirst %}</h1>
+<div class="toolbar">
+    <a class="button" href="{% url "project_create" %}">{% trans "create new"|capfirst %}</a>
+</div>
+<ul>
+{% for project in project_list %}
+    <li>
+        <a href="{% url "project_detail" project.pk %}">{{ project.name }}</a>
+        ({{ project.tasks.count }})
+    </li>
+{% endfor %}
+</ul>
+{% endblock content %}
