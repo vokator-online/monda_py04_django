@@ -89,9 +89,27 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'tasks/index.html', context)
 
 def task_list(request: HttpRequest) -> HttpResponse:
-    return render(request, 'tasks/task_list.html', {
-        'task_list': models.Task.objects.all(),
-    })
+    queryset = models.Task.objects
+    owner_username = request.GET.get('owner')
+    if owner_username:
+        owner = get_object_or_404(get_user_model(), username=owner_username)
+        queryset = queryset.filter(owner=owner)
+        projects = models.Project.objects.filter(owner=owner)
+    else:
+        projects = models.Project.objects.all()
+    project_pk = request.GET.get('project')
+    if project_pk:
+        project = get_object_or_404(models.Project, pk=project_pk)
+        queryset = queryset.filter(project=project)
+    search_name = request.GET.get('search_name')
+    if search_name:
+        queryset = queryset.filter(name__icontains=search_name)
+    context = {
+        'task_list': queryset.all(),
+        'project_list': projects,
+        'user_list': get_user_model().objects.all().order_by('username')
+    }
+    return render(request, 'tasks/task_list.html', context)
 
 def task_detail(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, 'tasks/task_detail.html', {

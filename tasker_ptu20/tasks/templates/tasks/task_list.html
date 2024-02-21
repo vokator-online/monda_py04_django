@@ -2,6 +2,31 @@
 {% block title %}{{ block.super }} {% trans "list" %}{% endblock title %}
 {% block content %}
 <h1>{% trans "tasks"|capfirst %}<span style="float:right;">{% trans "deadline"|capfirst %}</span></h1>
+<div class="toolbar">
+    <form method="get" action="{{ request.path }}">
+        <select name="owner" onchange="this.form.submit();">
+            <option value="">{% trans "filter by owner"|capfirst %}</option>
+            {% for user in user_list %}
+                <option value="{{ user.username }}" {% if user.username == request.GET.owner %}selected{% endif %}>
+                    {{ user.first_name }} {{ user.last_name }}
+                    ({{ user.username }})
+                </option>
+            {% endfor %}
+        </select>
+        <select name="project" onchange="this.form.submit();">
+            <option value="">{% trans "filter by project"|capfirst %}</option>
+            {% for project in project_list %}
+                <option value="{{ project.pk }}" {% if project.pk|slugify == request.GET.project %}selected{% endif %}>
+                    {{ project.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <input type="text" name="search_name" 
+        value="{{ request.GET.search_name }}"
+        placeholder="{% trans 'search by name' %}...">
+        <button type="submit">&#128269;</button>
+    </form>
+</div>
 <ul>
     <li class="list-table-header">
         <span>{% trans "name"|capfirst %}</span>
