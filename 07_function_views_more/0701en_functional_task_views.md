@@ -64,7 +64,7 @@ Now let's fix up the template and add the toolbar with filter controls and searc
                 <option value="{{ project.pk }}" {% if project.pk|slugify == request.GET.project_pk %}selected{% endif %}>{{ project.name }}</option>
             {% endfor %}
         </select>
-        <input type="text" name="search_name" value="{{ request.GET.search_name }}" placeholder="search by name...">
+        <input type="text" name="search_name" value="{{ request.GET.search_name }}" placeholder="{% trans 'search by name' %}...">
         <button type="submit">&#128269;</button>
     </form>
 </div>
