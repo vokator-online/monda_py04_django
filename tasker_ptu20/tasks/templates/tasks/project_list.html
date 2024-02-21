@@ -6,6 +6,7 @@
     <a class="button" href="{% url "project_create" %}">{% trans "create new"|capfirst %}</a>
     <form method="get" action="{{ request.path }}">
         <select name="owner" onchange="this.form.submit();">
+            <option value="">{% trans "filter by owner"|capfirst %}</option>
             {% for user in user_list  %}
                 <option value="{{ user.username }}" {% if user.username == request.GET.owner %}selected{% endif %}>
                     {{ user.first_name }} {{ user.last_name }}
