@@ -118,14 +118,20 @@ def task_detail(request: HttpRequest, pk: int) -> HttpResponse:
 
 def task_done(request: HttpRequest, pk: int) -> HttpResponse:
     task = get_object_or_404(models.Task, pk=pk)
-    task.is_done = not task.is_done
-    task.save()
-    messages.success(request, "{} {} {} {}".format(
-        _('task').capitalize(),
-        task.name,
-        _('marked as'),
-        _('done') if task.is_done else _('undone'),
-    ))
+    if request.user in [task.owner, task.project.owner]:
+        task.is_done = not task.is_done
+        task.save()
+        messages.success(request, "{} {} {} {}".format(
+            _('task').capitalize(),
+            task.name,
+            _('marked as'),
+            _('done') if task.is_done else _('undone'),
+        ))
+    else:
+        messages.error(request, "{}: {}".format(
+            _('permission error').title(),
+            _('you must be the owner of either the task itself or it\'s project'),
+        ))
     if request.GET.get('next'):
         return redirect(request.GET.get('next'))
     return redirect(task_list)
