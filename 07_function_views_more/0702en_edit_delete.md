@@ -58,7 +58,7 @@ def task_delete(request: HttpRequest, pk: int) -> HttpResponse:
         task.delete()
         messages.success(request, _("task deleted successfully"))
         return redirect('task_list')
-    return render(request, 'tasks/task_delete.html', {'task': task})
+    return render(request, 'tasks/task_delete.html', {'task': task, 'object': task})
 ```
 
 URL pattern:
