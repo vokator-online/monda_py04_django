@@ -1,7 +1,7 @@
 body {
     background-color: #cccccc;
     background-image: url('/static/img/IMG_104251.png');
-    background-size:cover;
+    background-size: cover;
     font-family: sans-serif;
     font-size: 16px;
     display: flex;
@@ -209,7 +209,7 @@ button:hover, .button:hover {
     display: inline;
 }
 
-.toolbar form select {
+.toolbar form select, .toolbar form input {
     padding: 0.4rem;
 }
 
