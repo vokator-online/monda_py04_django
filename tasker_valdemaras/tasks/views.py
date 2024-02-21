@@ -1,5 +1,8 @@
+from typing import Any
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -11,6 +14,17 @@ from . import models
 class ProjectListView(generic.ListView):
     model = models.Project
     template_name = 'tasks/project_list.html'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        queryset = super().get_queryset()
+        if self.request.GET.get('owner'):
+            queryset = queryset.filter(owner__username=self.request.GET.get('owner'))
+        return queryset
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['user_list'] = get_user_model().objects.all()
+        return context
 
 
 class ProjectDetailView(generic.DetailView):
@@ -33,21 +47,38 @@ class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class ProjectUpdateView(
-        LoginRequiredMixin, 
-        UserPassesTestMixin, 
-        generic.UpdateView
+class ProjectUpdateView(LoginRequiredMixin,
+        UserPassesTestMixin,
+        generic.UpdateView,
     ):
     model = models.Project
     template_name = 'tasks/project_update.html'
     fields = ('name', )
 
     def get_success_url(self) -> str:
-        messages.success(self.request, _('project updated successfully').capitalize())
+        messages.success(self.request, 
+            _('project updated succesfully').capitalize())
         return reverse('project_list')
 
     def test_func(self) -> bool | None:
-        return self.get_object().owner == self.request.user
+        return self.get_object().owner == self.request.user or self.request.user.is_superuser
+
+
+class ProjectDeleteView(LoginRequiredMixin,
+        UserPassesTestMixin,
+        generic.DeleteView,
+    ):
+    model = models.Project
+    template_name = 'tasks/project_delete.html'
+
+    def get_success_url(self) -> str:
+        messages.success(self.request, 
+            _('project deleted succesfully').capitalize())
+        return reverse('project_list')
+
+    def test_func(self) -> bool | None:
+        return self.get_object().owner == self.request.user or self.request.user.is_superuser
+
 
 def index(request: HttpRequest) -> HttpResponse:
     context = {
@@ -56,6 +87,31 @@ def index(request: HttpRequest) -> HttpResponse:
         'users_count': models.get_user_model().objects.count(),
     }
     return render(request, 'tasks/index.html', context)
+
+def task_list(request: HttpRequest) -> HttpResponse:
+    queryset = models.Task.objects
+    owner_username = request.GET.get('owner')
+    if owner_username:
+        owner = get_object_or_404(get_user_model(), username=owner_username)
+        queryset = queryset.filter(owner=owner)
+        projects = models.Project.objects.filter(owner=owner)
+    elif request.user.is_authenticated:
+        projects = models.Project.objects.filter(owner=request.user)
+    else:
+        projects = models.Project.objects
+    project_pk = request.GET.get('project_pk')
+    if project_pk:
+        project = get_object_or_404(models.Project, pk=project_pk)
+        queryset = queryset.filter(project=project)
+    search_name = request.GET.get('search_name')
+    if search_name:
+        queryset = queryset.filter(name__icontains=search_name)
+    context = {
+        'task_list': queryset.all(),
+        'project_list': projects.all(),
+        'user_list': get_user_model().objects.all().order_by('username'),
+    }
+    return render(request, 'tasks/task_list.html', context)
 
 def task_list(request: HttpRequest) -> HttpResponse:
     return render(request, 'tasks/task_list.html', {
