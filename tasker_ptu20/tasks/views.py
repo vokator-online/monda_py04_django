@@ -129,7 +129,7 @@ def index(request: HttpRequest) -> HttpResponse:
                 user_undone_tasks.count(),
             ),
             (
-                _('overdue_tasks').title(),
+                _('overdue tasks').title(),
                 user_undone_tasks.filter(is_done=False).count(),
             ),
         ]

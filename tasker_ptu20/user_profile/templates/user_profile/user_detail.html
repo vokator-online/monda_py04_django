@@ -4,6 +4,7 @@
 <h1>{% trans "user"|title %} {{ object.username }}</h1>
 <p>{{ object.first_name }} {{ object.last_name }}</p>
 {% if object == request.user %}
+    <p><a class="button" href="{% url "user_update" %}">{% trans "edit profile data" %}</a></p>
     <p>{% trans "e-mail"|capfirst %}: {{ object.email }}</p>
 {% endif %}
 {% endblock content %}
