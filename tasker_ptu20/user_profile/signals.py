@@ -6,7 +6,7 @@ from . import models
 
 @receiver(post_save, sender=get_user_model())
 def sync_user_profile(sender, instance, created, **kwargs):
-    if created or not instance.profile:
+    if created or not hasattr(instance, 'profile'):
         models.Profile.objects.create(user=instance)
     else:
         instance.profile.save()
