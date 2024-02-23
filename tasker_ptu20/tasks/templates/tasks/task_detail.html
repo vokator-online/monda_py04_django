@@ -5,14 +5,16 @@
     {% if task.is_done %}&#x2611;{% else %}&#x2610;{% endif %}</a>
     {{ task.name }}
 </h1>
-{% if task.owner == request.user %}
-    <p>
+<div class="toolbar">
+    {% if task.owner == request.user %}
         <a class="button" href="{% url "task_update" task.pk %}?next={{ request.GET.next|urlencode }}">
             {% trans "edit"|capfirst %}</a>
         <a class="button" href="{% url "task_delete" task.pk %}?next={{ request.GET.next|urlencode }}">
             {% trans "delete"|capfirst %}</a>
-    </p>
-{% endif %}
+    {% endif %}
+    <a class="button" href="{% if request.GET.next %}{{ request.GET.next }}{% else %}{% url "task_list" %}{% endif %}">
+        {% trans "return"|capfirst %}</a>
+</div>
 <p>{% trans "owner"|capfirst %}: {{ task.owner }} / {% trans "project"|capfirst %}: {{ task.project }}</p>
 <p>{% trans "deadline"|capfirst %}: {{ task.deadline }}</p>
 <p>{{ task.description }}</p>

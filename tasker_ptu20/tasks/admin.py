@@ -11,7 +11,7 @@ class ProjectAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             "fields": (
-                'name', 'owner', 'youtube_video_hash',
+                'name', 'owner', 'youtube_video_hash', 'description',
             ),
         }),
     )

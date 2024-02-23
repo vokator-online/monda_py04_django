@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext as _
+from tinymce.models import HTMLField
 
 
 class Project(models.Model):
@@ -12,7 +13,13 @@ class Project(models.Model):
         on_delete=models.CASCADE,
         related_name='projects',
     )
-    youtube_video_hash = models.CharField(_("YouTube video hash"), max_length=50, null=True, blank=True)
+    description = HTMLField(max_length=10000, null=True, blank=True)
+    youtube_video_hash = models.CharField(
+        _("YouTube video hash"), 
+        max_length=50, 
+        null=True, blank=True,
+        help_text=_("from Youtube's video URL copy the part after 'https://www.youtube.com/watch?v='.")
+    )
 
     class Meta:
         verbose_name = _("project")
@@ -28,7 +35,7 @@ class Project(models.Model):
 
 class Task(models.Model):
     name = models.CharField(_("name"), max_length=100, db_index=True)
-    description = models.TextField(_("description"), blank=True, max_length=10000)
+    description = HTMLField(max_length=10000, null=True, blank=True)
     project = models.ForeignKey(
         Project,
         verbose_name=_("project"), 
@@ -56,3 +63,28 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse("task_detail", kwargs={"pk": self.pk})
+
+
+class ProjectLike(models.Model):
+    project = models.ForeignKey(
+        Project, 
+        verbose_name=_("project"), 
+        on_delete=models.CASCADE,
+        related_name='likes',
+    )
+    user = models.ForeignKey(
+        get_user_model(), 
+        verbose_name=_("user"), 
+        on_delete=models.CASCADE,
+        related_name='project_likes',
+    )
+
+    class Meta:
+        verbose_name = _("project like")
+        verbose_name_plural = _("project likes")
+
+    def __str__(self):
+        return f"{self.project} {self.user}"
+
+    def get_absolute_url(self):
+        return reverse("project_like_detail", kwargs={"pk": self.pk})

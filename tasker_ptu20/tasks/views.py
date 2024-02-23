@@ -37,7 +37,7 @@ class ProjectDetailView(generic.DetailView):
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Project
     template_name = 'tasks/project_create.html'
-    fields = ('name', )
+    fields = ('name', 'youtube_video_hash', 'description', )
     
     def get_success_url(self) -> str:
         messages.success(self.request, 
@@ -55,7 +55,7 @@ class ProjectUpdateView(LoginRequiredMixin,
     ):
     model = models.Project
     template_name = 'tasks/project_update.html'
-    fields = ('name', )
+    fields = ('name', 'youtube_video_hash', 'description', )
 
     def get_success_url(self) -> str:
         messages.success(self.request, 
@@ -233,3 +233,15 @@ def task_delete(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect(request.GET.get('next'))
         return redirect('task_list')
     return render(request, "tasks/task_delete.html", {'task': task, 'object': task})
+
+@login_required
+def project_like(request: HttpRequest, pk: int) -> HttpResponse:
+    project = get_object_or_404(models.Project, pk=pk)
+    like = models.ProjectLike.objects.filter(project=project, user=request.user).first()
+    if not like:
+        models.ProjectLike.objects.create(project=project, user=request.user)
+    else:
+        like.delete()
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next'))
+    return redirect('project_list')

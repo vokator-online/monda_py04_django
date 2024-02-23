@@ -255,3 +255,12 @@ ul.dashboard li a:hover {
 ul.dashboard li a:hover h3 {
     background-color: #aaaaaa7f;
 }
+
+.user-content {
+    background-color: #ffffff7f;
+    border: 2px solid #999999;
+    border-radius: 1rem;
+    margin: 1rem;
+    overflow: auto;
+    max-width: max-content;
+}
