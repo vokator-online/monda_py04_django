@@ -37,7 +37,7 @@ class ProjectDetailView(generic.DetailView):
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Project
     template_name = 'tasks/project_create.html'
-    fields = ('name', )
+    fields = ('name', 'youtube_video_hash', 'description', )
     
     def get_success_url(self) -> str:
         messages.success(self.request, 
@@ -55,7 +55,7 @@ class ProjectUpdateView(LoginRequiredMixin,
     ):
     model = models.Project
     template_name = 'tasks/project_update.html'
-    fields = ('name', )
+    fields = ('name', 'youtube_video_hash', 'description', )
 
     def get_success_url(self) -> str:
         messages.success(self.request, 

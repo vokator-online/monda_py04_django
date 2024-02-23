@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'tasks',
     'user_profile',
+    'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,6 +133,23 @@ MEDIA_ROOT = BASE_DIR.joinpath(MEDIA_URL)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
+
+TINYMCE_DEFAULT_CONFIG = {
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist autolink lists link image charmap anchor "
+               "searchreplace visualblocks code insertdatetime "
+               "media table paste help wordcount",
+    "toolbar": "undo redo | bold italic underline strikethrough | "
+               "fontselect fontsizeselect formatselect | "
+               "alignleft aligncenter alignright alignjustify | "
+               "outdent indent | numlist bullist checklist | "
+               "forecolor backcolor casechange permanentpen "
+               "formatpainter removeformat | pagebreak | "
+               "charmap emoticons | insertfile image media "
+               "pageembed link anchor codesample | "
+               "ltr rtl | showcomments addcomment code",
+    "custom_undo_redo_levels": 10,
+}
 
 try:
     from .local_settings import *
