@@ -264,3 +264,9 @@ ul.dashboard li a:hover h3 {
     overflow: auto;
     max-width: max-content;
 }
+
+.toolbar form select.like-type {
+    margin: 0; padding: 0;
+    background-color: transparent;
+    border: none;
+}

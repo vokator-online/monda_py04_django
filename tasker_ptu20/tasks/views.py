@@ -33,6 +33,11 @@ class ProjectDetailView(generic.DetailView):
     model = models.Project
     template_name = 'tasks/project_detail.html'
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['like_types'] = models.LIKE_TYPE_CHOICES
+        return context
+
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
     model = models.Project
@@ -237,9 +242,10 @@ def task_delete(request: HttpRequest, pk: int) -> HttpResponse:
 @login_required
 def project_like(request: HttpRequest, pk: int) -> HttpResponse:
     project = get_object_or_404(models.Project, pk=pk)
-    like = models.ProjectLike.objects.filter(project=project, user=request.user).first()
+    like_type = request.GET.get('like_type') or 3
+    like = models.ProjectLike.objects.filter(project=project, user=request.user, like_type=like_type).first()
     if not like:
-        models.ProjectLike.objects.create(project=project, user=request.user)
+        models.ProjectLike.objects.create(project=project, user=request.user, like_type=like_type)
     else:
         like.delete()
     if request.GET.get('next'):
