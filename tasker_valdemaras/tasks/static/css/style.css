@@ -216,3 +216,42 @@ button:hover, .button:hover {
 div.tube {
     padding: 1rem;
 }
+
+ul.dashboard {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+}
+
+ul.dashboard li {
+    display: inline-block;
+    border: 2px solid #999999;
+    border-radius: 1rem;
+}
+
+ul.dashboard li h3 {
+    border-radius: 1rem;
+    text-align: center;
+}
+
+ul.dashboard li .stat {
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: #ffffff9f;
+    border-radius: 5rem;
+    min-width: 7rem;
+}
+
+ul.dashboard li a:hover {
+    text-decoration: none;
+}
+
+ul.dashboard li a:hover h3 {
+    background-color: #aaaaaa7f;
+}
