@@ -233,3 +233,15 @@ def task_delete(request: HttpRequest, pk: int) -> HttpResponse:
             return redirect(request.GET.get('next'))
         return redirect('task_list')
     return render(request, "tasks/task_delete.html", {'task': task, 'object': task})
+
+@login_required
+def project_like(request: HttpRequest, pk: int) -> HttpResponse:
+    project = get_object_or_404(models.Project, pk=pk)
+    like = models.ProjectLike.objects.filter(project=project, user=request.user).first()
+    if not like:
+        models.ProjectLike.objects.create(project=project, user=request.user)
+    else:
+        like.delete()
+    if request.GET.get('next'):
+        return redirect(request.GET.get('next'))
+    return redirect('project_list')

@@ -63,3 +63,28 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse("task_detail", kwargs={"pk": self.pk})
+
+
+class ProjectLike(models.Model):
+    project = models.ForeignKey(
+        Project, 
+        verbose_name=_("project"), 
+        on_delete=models.CASCADE,
+        related_name='likes',
+    )
+    user = models.ForeignKey(
+        get_user_model(), 
+        verbose_name=_("user"), 
+        on_delete=models.CASCADE,
+        related_name='project_likes',
+    )
+
+    class Meta:
+        verbose_name = _("project like")
+        verbose_name_plural = _("project likes")
+
+    def __str__(self):
+        return f"{self.project} {self.user}"
+
+    def get_absolute_url(self):
+        return reverse("project_like_detail", kwargs={"pk": self.pk})
