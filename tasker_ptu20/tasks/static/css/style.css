@@ -187,7 +187,7 @@ main form .helptext {
     font-size: 90%;
 }
 
-button, .button {
+button, .button, ul.paginator li a {
     background-color: #d8d8d8;
     border: 1px solid #666666;
     border-bottom: 2px solid #004488;
@@ -196,9 +196,19 @@ button, .button {
     cursor: pointer;
 }
 
-button:hover, .button:hover {
+button:hover, .button:hover, ul.paginator li a:hover {
     background-color: #dfdfdf;
     border-bottom: 2px solid #0055cc;
+}
+
+ul.paginator li.current a {
+    background-color: #004488;
+    color: #d8d8d8;
+}
+
+ul.paginator li.current:hover a {
+    background-color: #005599;
+    color: #d8d8d8;
 }
 
 .toolbar {
@@ -269,4 +279,11 @@ ul.dashboard li a:hover h3 {
     margin: 0; padding: 0;
     background-color: transparent;
     border: none;
+}
+
+ul.paginator {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+    list-style-type: none;
 }
