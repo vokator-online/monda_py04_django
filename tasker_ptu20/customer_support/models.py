@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 
 
 SUBJECT_CHOICES = (
+    ('', _('-- please choose --')),
     ('billing', _('billing and payments')),
     ('bugs', _('report a bug')),
     ('contact', _('contact request')),
@@ -21,7 +22,7 @@ TICKET_STATUSES = (
 
 
 class Ticket(models.Model):
-    subject = models.CharField(_("subject"), max_length=50, choices=SUBJECT_CHOICES, default='other')
+    subject = models.CharField(_("subject"), max_length=50, choices=SUBJECT_CHOICES, default='')
     body = models.TextField(_("body"), max_length=10000, default='', blank=True)
     sender = models.ForeignKey(
         get_user_model(), 
