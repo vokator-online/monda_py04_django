@@ -31,6 +31,10 @@ class Project(models.Model):
 
     def get_absolute_url(self):
         return reverse("project_detail", kwargs={"pk": self.pk})
+    
+    @property
+    def likes_by_type(self):
+        return self.likes.values('like_type').annotate(count=models.Count('user'))
 
 
 class Task(models.Model):
@@ -65,6 +69,16 @@ class Task(models.Model):
         return reverse("task_detail", kwargs={"pk": self.pk})
 
 
+LIKE_TYPE_CHOICES = (
+    (0, '&#x2764;&#xfe0f;'),
+    (1, '&#128163;'),
+    (2, '&#128293;'),
+    (3, '&#128077;'),
+    (4, '&#128405;'),
+    (5, '&#128078;'),
+)
+
+
 class ProjectLike(models.Model):
     project = models.ForeignKey(
         Project, 
@@ -78,6 +92,7 @@ class ProjectLike(models.Model):
         on_delete=models.CASCADE,
         related_name='project_likes',
     )
+    like_type = models.IntegerField(_("type"), choices=LIKE_TYPE_CHOICES, default=3)
 
     class Meta:
         verbose_name = _("project like")

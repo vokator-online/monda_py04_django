@@ -1,4 +1,6 @@
 from typing import Any
+from datetime import datetime
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -9,13 +11,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from datetime import datetime
+from urllib import parse
 from . import models, forms
 
 
 class ProjectListView(generic.ListView):
     model = models.Project
     template_name = 'tasks/project_list.html'
+    paginate_by = 5
 
     def get_queryset(self) -> QuerySet[Any]:
         queryset = super().get_queryset()
@@ -26,12 +29,21 @@ class ProjectListView(generic.ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['user_list'] = get_user_model().objects.all()
+        gets = self.request.GET.copy()
+        if "page" in gets:
+            gets.pop("page")
+        context['filters'] = "&".join([f"{key}={parse.quote(value)}" for key, value in gets.items()])
         return context
 
 
 class ProjectDetailView(generic.DetailView):
     model = models.Project
     template_name = 'tasks/project_detail.html'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['like_types'] = models.LIKE_TYPE_CHOICES
+        return context
 
 
 class ProjectCreateView(LoginRequiredMixin, generic.CreateView):
@@ -157,12 +169,19 @@ def task_list(request: HttpRequest) -> HttpResponse:
     search_name = request.GET.get('search_name')
     if search_name:
         queryset = queryset.filter(name__icontains=search_name)
+    page_obj = Paginator(queryset.all(), 5).get_page(request.GET.get('page', 1))
+    gets = request.GET.copy()
+    if "page" in gets:
+        gets.pop("page")
+    filters = "&".join([f"{key}={parse.quote(value)}" for key, value in gets.items()])
     context = {
-        'task_list': queryset.all(),
+        'task_list': page_obj,
         'project_list': models.Project.objects.all(),
         'user_list': get_user_model().objects.all().order_by('username'),
         'next': reverse('task_list') + '?' + \
             '&'.join([f"{key}={value}" for key, value in request.GET.items()]),
+        'filters': filters,
+        'page_obj': page_obj,
     }
     return render(request, 'tasks/task_list.html', context)
 
@@ -237,9 +256,10 @@ def task_delete(request: HttpRequest, pk: int) -> HttpResponse:
 @login_required
 def project_like(request: HttpRequest, pk: int) -> HttpResponse:
     project = get_object_or_404(models.Project, pk=pk)
-    like = models.ProjectLike.objects.filter(project=project, user=request.user).first()
+    like_type = request.GET.get('like_type') or 3
+    like = models.ProjectLike.objects.filter(project=project, user=request.user, like_type=like_type).first()
     if not like:
-        models.ProjectLike.objects.create(project=project, user=request.user)
+        models.ProjectLike.objects.create(project=project, user=request.user, like_type=like_type)
     else:
         like.delete()
     if request.GET.get('next'):
