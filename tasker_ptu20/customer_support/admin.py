@@ -1,9 +1,17 @@
+from typing import Any
 from django.contrib import admin, messages
 from django.http import HttpRequest
 from django.http.response import HttpResponse
 from django.utils.translation import ngettext, gettext as _
 from django.db.models import QuerySet
-from . import models
+from . import models, utils
+
+
+class TicketMessageInline(admin.TabularInline):
+    model = models.TicketMessage
+    extra = 0
+    fields = ['body', 'sender_name', 'recipient_name', 'sent_at']
+    readonly_fields = ['sender_name', 'recipient_name', 'sent_at']
 
 
 @admin.register(models.Ticket)
@@ -14,6 +22,25 @@ class TicketAdmin(admin.ModelAdmin):
     readonly_fields = ['mail_sent', 'sent_at', 'sender_email', 'sender_name', 'mail_sent']
     fields = ['subject', 'body', 'sender_name', 'sender_email', 'sender', 'status', 'sent_at', 'mail_sent']
     actions = ['mark_unread', 'mark_read', 'set_processing', 'close']
+    inlines = [TicketMessageInline]
+
+    def save_formset(self, request:HttpRequest, form: Any, formset: Any, change: Any) -> None:
+        instances:list[models.TicketMessage] = formset.save(commit=False)
+        for obj in formset.deleted_objects:
+            obj.delete()
+        for instance in instances:
+            if instance._state.adding:
+                instance.sender = request.user
+                instance.sender_name = f"{request.user.first_name} {request.user.last_name}"
+                instance.sender_email = request.user.email
+                if instance.ticket.sender:
+                    instance.recipient = instance.ticket.sender
+                else:
+                    instance.recipient_name = instance.ticket.sender_name
+                    instance.recipient_email = instance.ticket.sender_email
+                instance.save()
+                utils.send_support_ticket_email(request, instance)
+        formset.save_m2m()
 
     def change_view(
             self, 
