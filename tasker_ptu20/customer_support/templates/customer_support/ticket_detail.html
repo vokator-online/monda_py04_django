@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{{ block.super }} {% trans "ticket" %} #{{ object.pk }}{% endblock title %}
+{% block content %}
+<h1>{% trans "ticket"|capfirst %} #{{ object.pk }}: {{ object.subject }}</h1>
+<p>{% trans "sent at"|capfirst %} {{ object.sent_at }} {% trans "by" %} {{ object.sender }}</p>
+<div class="user-content">{{ object.body|linebreaks }}</div>
+
+{% endblock content %}

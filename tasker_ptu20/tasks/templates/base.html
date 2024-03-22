@@ -25,6 +25,8 @@
                 <li><a href="{% url "user_detail_current" %}">{{ user }}</a></li>
                 {% if user.is_superuser or user.is_staff %}
                     <li><a href="{% url "admin:index" %}">{% trans "admin"|capfirst %}</a></li>
+                {% else %}
+                    <li><a href="{% url "ticket_list" %}">{% trans "tickets" %}</a></li>
                 {% endif %}
                 <li><form method="post" action="{% url "logout" %}">{% csrf_token %}
                 <button type="submit">{% trans "log out"|capfirst %}</button></form></li>

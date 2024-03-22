@@ -1,8 +1,36 @@
+from typing import Any
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.views import generic
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from . import models, forms, utils
+
+
+class TicketList(LoginRequiredMixin, generic.ListView):
+    model = models.Ticket
+    template_name = 'customer_support/ticket_list.html'
+
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        qs = qs.filter(sender=self.request.user)
+        return qs
+
+
+class TicketDetail(UserPassesTestMixin, generic.DetailView):
+    model = models.Ticket
+    template_name = 'customer_support/ticket_detail.html'
+
+    def test_func(self) -> bool | None:
+        obj = self.get_object()
+        if self.request.user.is_authenticated:
+            if obj.sender == self.request.user:
+                return True
+        else:
+            if not obj.sender:
+                return True
+        return False
 
 
 class TicketCreateView(generic.CreateView):

@@ -45,7 +45,7 @@ class Ticket(models.Model):
         return _("{} from {} sent {}").format(
             self.subject,
             self.sender_email,
-            self.sent_at,
+            str(self.sent_at)[:19],
         )
 
     def clean(self) -> None:
