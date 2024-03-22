@@ -152,6 +152,9 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
 }
 
+ADMIN_EMAIL = "kestas@midonow.fi"
+ADMIN_NAME = "Customer Support"
+
 try:
     from .local_settings import *
 except ImportError:

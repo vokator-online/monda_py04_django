@@ -1,10 +1,12 @@
 from typing import Any
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.views import generic
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
 from . import models, forms, utils
 
 
@@ -18,9 +20,33 @@ class TicketList(LoginRequiredMixin, generic.ListView):
         return qs
 
 
-class TicketDetail(UserPassesTestMixin, generic.DetailView):
+class TicketDetail(UserPassesTestMixin, generic.edit.FormMixin, generic.DetailView):
     model = models.Ticket
     template_name = 'customer_support/ticket_detail.html'
+    form_class = forms.TicketMessageForm
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        ticket:models.Ticket = self.object
+        form.instance.ticket = ticket
+        form.instance.recipient_email = settings.ADMIN_EMAIL
+        form.instance.recipient_name = settings.ADMIN_NAME
+        if self.request.user.is_authenticated:
+            form.instance.sender = self.request.user
+            form.instance.clean()
+        else:
+            form.instance.sender_name = ticket.sender_name
+            form.instance.sender_email = ticket.sender_email
+        form.save()
+        utils.send_support_ticket_email(self.request, form.instance)
+        return redirect('ticket_detail', pk=ticket.pk)
 
     def test_func(self) -> bool | None:
         obj = self.get_object()

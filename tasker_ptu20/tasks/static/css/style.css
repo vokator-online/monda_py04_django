@@ -160,7 +160,7 @@ div.fog, div.user-content {
     background-color: #ffffff9f;
     display: inline-block;
     padding: 0.5rem;
-    margin: 0.5rem;
+    margin: 0 0.5rem 0.5rem;
     border-radius: 1rem;
 }
 

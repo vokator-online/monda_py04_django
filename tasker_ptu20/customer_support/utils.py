@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
@@ -10,7 +11,7 @@ def send_support_ticket_email(request: HttpRequest, obj:models.Ticket | models.T
         template_text = get_template('customer_support/ticket_email_text.html')
         subject = obj.subject
         obj_id = obj.id
-        recipient_email = "kestas@midonow.fi"
+        recipient_email = settings.ADMIN_EMAIL
     elif isinstance(obj, models.TicketMessage):
         template_text = get_template('customer_support/ticketmessage_email_text.html')
         subject = obj.ticket.subject

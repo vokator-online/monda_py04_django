@@ -31,13 +31,12 @@ class TicketAdmin(admin.ModelAdmin):
         for instance in instances:
             if instance._state.adding:
                 instance.sender = request.user
-                instance.sender_name = f"{request.user.first_name} {request.user.last_name}"
-                instance.sender_email = request.user.email
                 if instance.ticket.sender:
                     instance.recipient = instance.ticket.sender
                 else:
                     instance.recipient_name = instance.ticket.sender_name
                     instance.recipient_email = instance.ticket.sender_email
+                instance.clean()
                 instance.save()
                 utils.send_support_ticket_email(request, instance)
         formset.save_m2m()

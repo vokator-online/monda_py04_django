@@ -1,5 +1,9 @@
+from typing import Any, Mapping
 from django import forms
+from django.core.files.base import File
 from django.core.validators import validate_email
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
 from . import models
 
 
@@ -24,3 +28,10 @@ class TicketFormUser(forms.ModelForm):
     class Meta:
         model = models.Ticket
         fields = ['subject', 'body']
+
+
+class TicketMessageForm(forms.ModelForm):
+    class Meta:
+        model = models.TicketMessage
+        fields = ['body']
+        labels = {'body': ""}
