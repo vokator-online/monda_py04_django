@@ -21,7 +21,7 @@ def send_support_ticket_email(request: HttpRequest, obj:models.Ticket | models.T
         raise TypeError("support ticket/message object type error")
     message = template_text.render({'obj': obj})
     try:
-        send_mail(f"Support Ticket #{obj_id}: {subject}", message, obj.sender_email, [recipient_email])
+        send_mail(f"Support Ticket #{obj_id}: {subject}", message, obj.sender_email, [recipient_email], fail_silently=False)
     except Exception as error:
         messages.warning(request, _("Thank you. We had some issues ({}) but we still got your message.").format(error))
     else:

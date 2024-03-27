@@ -100,7 +100,7 @@ class TicketMessage(models.Model):
             self.sender_email = self.sender.email
             self.sender_name = f"{self.sender.first_name} {self.sender.last_name}"
         if self.recipient:
-            self.recipient_name = self.recipient.email
+            self.recipient_email = self.recipient.email
             self.recipient_name = f"{self.recipient.first_name} {self.recipient.last_name}"
 
     def get_absolute_url(self):

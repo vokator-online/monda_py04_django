@@ -89,3 +89,7 @@ class TicketAdmin(admin.ModelAdmin):
             "%d tickets have been closed",
             updated
         ) % updated, messages.SUCCESS)
+
+@admin.register(models.TicketMessage)
+class TicketMessageAdmin(admin.ModelAdmin):
+    pass
