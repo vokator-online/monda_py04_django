@@ -46,15 +46,14 @@ class TicketDetail(UserPassesTestMixin, generic.edit.FormMixin, generic.DetailVi
             form.instance.sender_email = ticket.sender_email
         form.save()
         utils.send_support_ticket_email(self.request, form.instance)
-        return redirect('ticket_detail', pk=ticket.pk)
+        return redirect(f"{reverse_lazy('ticket_detail', kwargs={'pk':ticket.pk})}?access_key={ticket.access_key}")
 
     def test_func(self) -> bool | None:
         obj = self.get_object()
-        if self.request.user.is_authenticated:
-            if obj.sender == self.request.user:
-                return True
+        if self.request.user.is_authenticated and obj.sender == self.request.user:
+            return True
         else:
-            if not obj.sender:
+            if not obj.sender and obj.access_key == self.request.GET.get('access_key'):
                 return True
         return False
 

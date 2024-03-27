@@ -1,9 +1,8 @@
-from typing import Iterable
 from django.db import models
 from django.utils.translation import gettext as _
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-
+from django.utils.crypto import get_random_string
 
 SUBJECT_CHOICES = (
     ('', _('-- please choose --')),
@@ -20,6 +19,10 @@ TICKET_STATUSES = (
     ('closed', _('closed')),
 )
 
+def get_access_key():
+    return get_random_string(42)
+
+
 class Ticket(models.Model):
     subject = models.CharField(_("subject"), max_length=50, choices=SUBJECT_CHOICES, default='')
     body = models.TextField(_("body"), max_length=10000, default='', blank=True)
@@ -35,6 +38,7 @@ class Ticket(models.Model):
     sent_at = models.DateTimeField(_("sent at"), auto_now_add=True, db_index=True)
     mail_sent = models.BooleanField(_("email sent"), default=False)
     status = models.CharField(_("status"), max_length=15, choices=TICKET_STATUSES, default='new', db_index=True)
+    access_key = models.CharField(_("access key"), max_length=42, default=get_access_key)
 
     class Meta:
         verbose_name = _("ticket")
